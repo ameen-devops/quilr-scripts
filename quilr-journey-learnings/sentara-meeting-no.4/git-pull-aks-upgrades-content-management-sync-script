@@ -1,0 +1,48 @@
+
+SET AUTOMATIC GIT PULL FOR QUILR-HELM-CHARTS FOLDER:
+
+git clone -b sentara-paas-deployment https://ameenquilr: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@github.com/quilrbusiness/quilr-helm-charts.git
+
+cd quilr-helm-charts
+git remote set-url origin https://ameenquilr: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@github.com/quilrbusiness/quilr-helm-charts.git
+git pull
+
+git clone -b main https://ameenquilr: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@github.com/quilrbusiness/content-management-service.git
+
+cd content-management-service
+git remote set-url origin https://ameenquilr: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@github.com/quilrbusiness/content-management-service.git
+git pull
+
+cd content-management-service
+git pull
+cd static-files
+cp -pr * /media/quilrfileshareaks
+
+
+quilr-agent-service ---> make it running and check for any errors
+
+cd quilr-helm-charts
+./helm-upgrade-restart.sh quilr-agent-service
+
+execute install all helm charts script for probes added --> may take time for all services to be up and running
+
+TEST UPGRADE ON CLUSTER AND SERVICES NOT CRASHING:
+
+ON UI ---> AKS ---> SETTINGS ---> UPGRADES ---> NODE CHANNEL TYPE ( if set to node image -- updates can happen as per schedule time )
+
+scale down nodecount to zero and scale back to desired number to check probes setting working when node image upgrade happens during schedule time
+
+az aks scale --resource-group mgt-cybersec-test-rg-aks-e1-01 --name mgt-cybersec-test-aks-e1-01 --node-count 0 --nodepool-name quilrworker2
+
+az aks scale --resource-group mgt-cybersec-test-rg-aks-e1-01 --name mgt-cybersec-test-aks-e1-01 --node-count 0 --nodepool-name quilrworker2
+
+sync of content management: ( CAN BE RUN AS A SCRIPT )
+
+#!/usr/bin/env bash
+set -e
+
+cd content-management-service
+git pull 
+cd static-files
+rsync -a --delete --itemize-changes --stats ./ /media/quilrfileshareaks/
+
