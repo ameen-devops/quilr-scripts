@@ -1,0 +1,55 @@
+001.alert-transformation-service  ----> implemented
+002.aap-sync-client-service        ----> implemented
+003.app-transformation-service  ----> implemented
+004.browser-extension-service   ----> implemented
+005.classification-config-service   -----> NOT NEEDED
+006.content-alert-classification  ----> implemented
+007.content-destfwd-service   ----> implemented
+008.content-knowledgebase-service  ---->  implemented
+009.content-lambda-service    ----> implemented
+010.content-listerner-service  ----> implemented
+011.content-repository-service  ----> implemented
+012.content-scheduler-service   ----> implemented
+013.content-server-transformations  ----> implemented
+014.content-temporal-service  ----> implemented
+015.content-tracking-service  ----> implemented
+016.copilot-workflow-executor  ----> implemented
+017.dashboard-service ----> implemented
+018.data-config-api ----> implemented
+019.data-explorer-service ----> implemented
+020.device-transformation-service  ----> implemented
+021.dlp-classification-and-clustering-service  ----> implemented
+022.dlp-config-service  ----> implemented
+023.dlp-connector-service  ----> implemented
+024.dlp-data-definition-service  ----> implemented
+025.dlp-deduplication-service ----> implemented
+026.dlp-deletion-service  ----> implemented
+027.dlp-indexer-service  ----> implemented
+028.dlp-metrics-service  ----> implemented
+029.event-transformation-service  ----> implemented
+030.instance-manager-service  ----> implemented
+031.quilr-agent-service  ----> implemented
+032.quilr-ai-services ----> implemented
+033.quilr-auth-ts  ----> implemented
+034.quilr-bff  ----> implemented
+035.quilr-eam-service ----> implemented
+036.quilr-grouping-service  ----> implemented
+037.quilr-inferencing-models  ----> implemented
+038.quilr-intune-fabric  ----> NOT NEEDED
+039.quilr-microsoft-fabric ----> NOT NEEDED
+040.quilr-okta-fabric  ----> implemented
+041.quilr-playbook-service  ----> implemented
+042.quilr-scheduler-service  ----> implemented
+043.quilr-scoring-service  ----> implemented
+044.quilr-web  ----> implemented
+045.raw-forwarder-service   -----> NOT NEEDED
+046.schema-registry-service  ----> implemented
+047.search-service  ----> implemented
+048.snowflake-ingestion-service  ----> implemented
+049.system-email-service  ----> implemented
+050.templating-engine  ----> implemented
+051.user-response-action-service  ----> implemented
+052.user-transformation-service   ----> implemented
+053.web-transformation-service   ----> implemented
+054.dlp-common-config   -----> NOT NEEDED
+055.quilr-common-config    -----> NOT NEEDED
