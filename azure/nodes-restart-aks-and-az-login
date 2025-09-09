@@ -1,0 +1,66 @@
+
+kubectl get nodes --show-labels
+
+az aks show \
+  --resource-group quilr-poc-spotnana-eastus2 \
+  --name quilr-spotnana-poc \
+  --query nodeResourceGroup -o tsv
+AADSTS700082: The refresh token has expired due to inactivity. The token was issued on 2025-02-15T11:16:15.2322035Z and was inactive for 90.00:00:00. Trace ID: 6d16db54-cb2b-4034-bf0e-7017845c4200 Correlation ID: 764b92eb-9747-43a5-9f4f-acf4927fca16 Timestamp: 2025-09-08 05:34:16Z
+Interactive authentication is needed. Please run:
+az login --scope https://management.core.windows.net//.default
+
+az login --scope https://management.core.windows.net//.default
+To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code EDNYQTKQQ to authenticate.
+
+No     Subscription name            Subscription ID                       Tenant
+-----  ---------------------------  ------------------------------------  -------------------
+[1]    Microsoft Azure Sponsorship  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Quilr
+[2] *  Quilr POC                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  nana Technology
+
+az aks show   --resource-group quilr-poc-spotnana-eastus2   --name quilr-spotnana-poc   --query nodeResourceGroup -o tsv
+RG-spotnana-env-nodepool
+
+az vmss list -g RG-spotnana-env-nodepool -o table
+
+Name                        ResourceGroup             Location    Zones    Capacity    Overprovision    UpgradePolicy
+--------------------------  ------------------------  ----------  -------  ----------  ---------------  ---------------
+aks-quilrpoc-31833563-vmss  RG-spotnana-env-nodepool  eastus2              2           False            Manual
+
+az vmss list-instances   -g RG-spotnana-env-nodepool   -n aks-quilrpoc-31833563-vmss   -o table
+
+InstanceId    LatestModelApplied    Location    ModelDefinitionApplied    Name                           ProvisioningState    ResourceGroup             TimeCreated                        VmId
+------------  --------------------  ----------  ------------------------  -----------------------------  -------------------  ------------------------  ---------------------------------  ------------------------------------
+23            True                  eastus2     VirtualMachineScaleSet    aks-quilrpoc-31833563-vmss_23  Succeeded            RG-spotnana-env-nodepool  2025-02-15T11:24:59.3002806+00:00  7c1dcf91-b425-4c53-884d-31e476bd7ba5
+24            True                  eastus2     VirtualMachineScaleSet    aks-quilrpoc-31833563-vmss_24  Succeeded            RG-spotnana-env-nodepool  2025-02-15T11:24:59.3002806+00:00  b5b0b1dc-ac14-4b11-a5b5-b202a1b6e857
+
+
+az vmss restart \
+  -g RG-spotnana-env-nodepool \
+  -n aks-quilrpoc-31833563-vmss \
+  --instance-ids 23
+  
+az vmss restart \
+  -g RG-spotnana-env-nodepool \
+  -n aks-quilrpoc-31833563-vmss \
+  --instance-ids 24
+  
+az vmss restart \
+  -g RG-spotnana-env-nodepool \
+  -n aks-quilrpoc-31833563-vmss
+  
+=========================================================================================
+
+Instead of manually draining/restarting, you can trigger a node image upgrade which safely rolls nodes one by one:
+
+az aks nodepool upgrade \
+  --resource-group <rg> \
+  --cluster-name <aks-cluster> \
+  --name <nodepool-name> \
+  --node-image-only
+  
+This:
+
+Cordon + drain nodes automatically
+Recreates them with the latest VM image
+Ensures no downtime (as long as you have enough replicas)  
+=========================================================================================
