@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Generate Library Jobs for DEV ENV') {
+            steps {
+                jobDsl scriptText: '''
+                    folder('ALL-JOBS-QUILR-DEV-ENV') {
+                        description('Folder containing all Quilr DEV environment jobs.')
+                    }
+
+                    def libraryJobs = [
+                        [name: 'vault-interaction-library', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'api-caching-lib', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'data-fabric-lib', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'dlp-commons', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'dlp-metrics-producer', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'jwt-decoder-library', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'quilr-api-lib', branch: 'quilr-saas', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'quilr-common-lib', branch: 'quilr-preprod', jenkinsfile: 'Jenkinsfile'],
+                        [name: 'quilr-library', branch: 'main', jenkinsfile: 'Jenkinsfile.push']
+                    ]
+
+                    libraryJobs.each { lib ->
+                        def repoUrl = "https://github.com/quilrbusiness/${lib.name}.git"
+
+                        pipelineJob("ALL-JOBS-QUILR-DEV-ENV/${lib.name}") {
+                            description("Automatically generated pipeline job for ${lib.name} inside DEV ENV folder")
+
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url(repoUrl)
+                                                credentials('jenkins_jobs_github_pat')
+                                            }
+                                            branches(lib.branch)
+                                        }
+                                    }
+                                    scriptPath(lib.jenkinsfile)
+                                }
+                            }
+
+                            triggers {
+                                scm('* * * * *') // Poll every 5 mins
+                            }
+                        }
+                    }
+                '''
+            }
+        }
+    }
+}
