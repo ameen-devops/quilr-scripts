@@ -1,3 +1,9 @@
+name of job in jenkins- create-jobs-libraries-dev-env
+folder- ALL-JOBS-QUILR-DEV-ENV
+credentials - jenkins_jobs_github_pat
+branch - main
+scriptpath- Jenkinsfile
+
 pipeline {
     agent any
 
