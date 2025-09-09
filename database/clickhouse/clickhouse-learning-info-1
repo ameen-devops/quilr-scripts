@@ -1,0 +1,32 @@
+What is ClickHouse?
+ 
+
+ClickHouse is an open-source column-oriented database management system that enables users to generate analytical reports using SQL queries
+in real-time. Designed for online analytical processing (OLAP), ClickHouse excels at handling large volumes of data, including streaming real-time data.
+Its columnar storage format allows for efficient data compression and fast query processing, making it particularly well-suited for data analytics.
+ 
+In addition to its open-source version, ClickHouse offers a managed service known as ClickHouse Cloud.
+ The cloud simplifies operational overhead, reduces costs, and provides a serverless experience 
+ with features like autoscaling, tenant isolation, and security measures.
+ 
+ClickHouse is an open-source, columnar database designed for analytical workloads (OLAP).
+Think of it as a tool for fast queries on large datasets—logs, metrics, events, business intelligence dashboards, etc.
+
+Row-based DBs (like MySQL, PostgreSQL): Good for transactions (insert/update/delete), but slow for analytics on billions of rows.
+
+Column-based DBs (like ClickHouse): Optimized for analytics—queries like “Give me the top 10 users by requests in the last 30 days” run extremely fast.
+
+ClickHouse Core Concepts (Simple Terms)
+
+Database & Table → Like MySQL/Postgres, you create databases and tables.
+
+Engines → Each table uses a storage engine (e.g., MergeTree) that defines how data is stored and indexed.
+
+Columnar storage → Each column is stored separately, so queries that touch only a few columns are super fast.
+
+SQL-like queries → Uses standard SQL (with some extensions).
+
+Insert-only → Data is usually inserted (not updated frequently).
+
+
+helm install quilr oci://registry-1.docker.io/bitnamicharts/clickhouse
