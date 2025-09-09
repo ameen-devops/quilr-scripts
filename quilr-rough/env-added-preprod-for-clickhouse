@@ -1,0 +1,42 @@
+DW_NAME: 'clickhouse'
+  DW_USER: 'default'
+  #DW_PASSWORD: 'JjzZA_Vg7oDn1'
+  DW_PASSWORD: '6g0_T1Dj6cnF9'
+  DW_URL: 'jdbc:clickhouse://oy237b2yd4.us-east-2.aws.clickhouse.cloud:8443/default?ssl=true'
+  GRAPH_NAME: 'neo4j'
+  
+  DW_NAME: "{{ .Values.configMap.DW_NAME}}"
+  DW_USER: "{{ .Values.configMap.DW_USER}}"
+  DW_PASSWORD: "{{ .Values.configMap.DW_PASSWORD}}"
+  DW_URL: "{{ .Values.configMap.DW_URL}}"
+  GRAPH_NAME: "{{ .Values.configMap.GRAPH_NAME}}"
+  
+            - name: DEFAULT_KNOWLEDGE_HOST
+              value: vault:secret/data/quilr-common-config-vault#DEFAULT_KNOWLEDGE_HOST
+            - name: DEFAULT_KNOWLEDGE_PORT
+              value: vault:secret/data/quilr-common-config-vault#DEFAULT_KNOWLEDGE_PORT
+            - name: DEFAULT_KNOWLEDGE_PSWD
+              value: vault:secret/data/quilr-common-config-vault#DEFAULT_KNOWLEDGE_PSWD
+            - name: DEFAULT_KNOWLEDGE_USERNAME
+              value: vault:secret/data/quilr-common-config-vault#DEFAULT_KNOWLEDGE_USERNAME 
+			  
+for browser-extension-service------------->
+dwhconfig:
+  name: ${DW_NAME:clickhouse}
+  user: ${DW_USER:default}
+  password: ${DW_PASSWORD:6g0_T1Dj6cnF9}
+  url: ${DW_URL:jdbc:clickhouse://oy237b2yd4.us-east-2.aws.clickhouse.cloud:8443/default?ssl=true}
+  
+  for data-explorer-service------------->
+  graph:
+  name: ${GRAPH_NAME:neo4j}
+  user: ${DEFAULT_KNOWLEDGE_USERNAME:neo4j}
+  password: ${DEFAULT_KNOWLEDGE_PSWD:QUI#4LR&nE04J!345}
+  url: neo4j://${DEFAULT_KNOWLEDGE_HOST:10.71.13.205}:${DEFAULT_KNOWLEDGE_PORT:7687}
+
+dwhconfig:
+  name: ${DW_NAME:clickhouse}
+  user: ${DW_USER:default}
+  password: ${DW_PASSWORD:6g0_T1Dj6cnF9}
+  url: ${DW_URL:jdbc:clickhouse://oy237b2yd4.us-east-2.aws.clickhouse.cloud:8443/default?ssl=true}
+  
