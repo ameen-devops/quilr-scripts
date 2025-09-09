@@ -1,0 +1,120 @@
+name of job in jenkins- create-jobs-dev-env
+folder- ALL-JOBS-QUILR-DEV-ENV
+credentials - jenkins_jobs_github_pat
+branch - dev-onprem2
+scriptpath- Jenkinsfile.dev
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Generate Jobs for DEV ENVIRONMENT') {
+            steps {
+                jobDsl scriptText: '''
+                    folder('ALL-JOBS-QUILR-DEV-ENV') {
+                        description('Folder containing all Quilr DEV environment jobs.')
+                    }
+
+                    def jobNames = [
+                        'alert-transformation-service',
+                        'app-sync-client-service',
+                        'app-transformation-service',
+                        'axis-analytics-job',
+                        'axis-ingestion-service',
+                        'browser-extension-service',
+                        'classification-config-service',
+                        'content-alert-classification',
+                        'content-destfwd-service',
+                        'content-knowledgebase-service',
+                        'content-lambda-service',
+                        'content-listerner-service',
+                        'content-repository-service',
+                        'content-scheduler-service',
+                        'content-server-transformations',
+                        'content-temporal-service',
+                        'copilot-workflow-executor',
+                        'data-block-persist-service',
+                        'data-block-receiver-service',
+                        'data-block-sender-service',
+                        'data-block-sten-service',
+                        'data-block-util-service',
+                        'data-config-api',
+                        'data-explorer-service',
+                        'data-fabric-core-service',
+                        'demo-quilr-web',
+                        'device-transformation-service',
+                        'dlp-classification-and-clustering-service',
+                        'dlp-config-service',
+                        'dlp-connector-service',
+                        'dlp-data-aggregator',
+                        'dlp-data-collector',
+                        'dlp-data-definition-service',
+                        'dlp-deduplication-service',
+                        'dlp-default-classifier',
+                        'dlp-deletion-service',
+                        'dlp-indexer-service',
+                        'dlp-metrics-service',
+                        'email-transformation-service',
+                        'event-transformation-service',
+                        'quilr-agent-service',
+                        'quilr-auth-ts',
+                        'quilr-bff',
+                        'quilr-findingresolution-service',
+                        'quilr-grouping-service',
+                        'quilr-housekeeping-script',
+                        'quilr-inferencing-models',
+                        'quilr-instance-manager-service',
+                        'quilr-intune-fabric',
+                        'quilr-llm-service',
+                        'quilr-memory-mcp',
+                        'quilr-microsoft-fabric',
+                        'quilr-okta-fabric',
+                        'quilr-playbook-service',
+                        'quilr-query-builder',
+                        'quilr-scheduler-service',
+                        'quilr-scoring-service',
+                        'quilr-web',
+                        'quilr_ai_services',
+                        'raw-forwarder-service',
+                        'schema-registry-service',
+                        'search-service',
+                        'snowflake-ingestion-service',
+                        'system-email-service',
+                        'templating-engine',
+                        'user-data-harvester',
+                        'user-response-action-service',
+                        'user-transformation-service',
+                        'web-browser-transformation'
+                    ]
+
+                    jobNames.unique().each { jobName ->
+                        def repoUrl = "https://github.com/quilrbusiness/${jobName}.git"
+
+                        pipelineJob("ALL-JOBS-QUILR-DEV-ENV/${jobName}") {
+                            description("Automatically generated dev job for ${jobName}")
+
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url(repoUrl)
+                                                credentials('jenkins_jobs_github_pat')
+                                            }
+                                            branches('dev-onprem2')
+                                        }
+                                    }
+                                    scriptPath('Jenkinsfile.dev')
+                                }
+                            }
+
+                            triggers {
+                                scm('* * * * *') // Poll every 5 mins
+                            }
+                        }
+                    }
+                '''
+            }
+        }
+    }
+}
