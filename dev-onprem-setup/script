@@ -12,7 +12,7 @@ process:
 ---------------
 download images
 tar the images 
-download helm charts
+download helm charts / pull the helm charts with specific version
 install the helm charts
 custom values.yaml make it
 
