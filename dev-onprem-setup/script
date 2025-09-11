@@ -18,11 +18,13 @@ custom values.yaml make it
 
 sudo crictl images
 
+plugin install
 how to see which images are there through helm commands with the chart
 download those images
 
 download:
 
+helm plugin install https://github.com/nikhilsbhat/helm-images
 sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1
 sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0
 sudo ctr -n k8s.io images pull  docker.io/bitnamilegacy/zookeeper:3.9.0
