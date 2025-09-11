@@ -18,3 +18,26 @@ custom values.yaml make it
 
 sudo crictl images
 
+how to see which images are there through helm commands with the chart
+download those images
+
+download:
+
+sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1
+sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0
+sudo ctr -n k8s.io images pull  docker.io/bitnamilegacy/zookeeper:3.9.0
+sudo ctr -n k8s.io images pull  provectuslabs/kafka-ui:latest
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/vault-operator:v1.23.0
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/bank-vaults:v1.32.0 
+sudo ctr -n k8s.io images pull hashicorp/vault:1.14.8
+sudo ctr -n k8s.io images pull  ubuntu:bionic 
+sudo ctr -n k8s.io images pull docker.io/library/neo4j:5.25.1-community
+sudo ctr -n k8s.io images pull docker.io/bitnami/redis:8.2.1-debian-12-r0
+sudo ctr -n k8s.io images pull  docker.io/bitnami/postgresql:17.6.0-debian-12-r0
+sudo ctr -n k8s.io images pull  docker.io/bitnami/elasticsearch:9.1.2-debian-12-r0
+sudo ctr -n k8s.io images pull  docker.io/bitnami/os-shell:12-debian-12-r50
+
+
+
+
+
