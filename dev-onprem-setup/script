@@ -101,6 +101,10 @@ sudo chown 7474:7474 /home/quilradmin/quilr-data/neo4j/plugins/apoc-5.25.1-core.
 kubectl apply -f neo4j-pv.yaml -n quilr
 kubectl apply -f neo4j.yaml -n quilr
 
+kubectl create configmap quilr-initdb-scripts \
+  --from-file=init-scripts/ \
+  -n quilr
+
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
