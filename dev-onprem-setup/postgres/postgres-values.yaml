@@ -1,0 +1,29 @@
+primary:
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1"
+    limits:
+      memory: "4Gi"
+      cpu: "2"
+
+  extraEnvVars:
+    - name: POSTGRESQL_MAX_CONNECTIONS
+      value: "450"
+    - name: POSTGRESQL_SHARED_BUFFERS
+      value: "1GB"
+
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+
+  persistence:
+    enabled: true
+    existingClaim: postgres-hostpath-pvc
+
+  initdb:
+    scriptsConfigMap: "quilr-initdb-scripts"
+
+volumePermissions:
+  enabled: true
