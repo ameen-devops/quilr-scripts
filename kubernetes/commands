@@ -1,0 +1,1 @@
+ kubectl logs -f quilr-db-elasticsearch-master-0 -n quilr --tail=1  -----> tail logs with single line each
