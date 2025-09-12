@@ -1,0 +1,119 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: quilr-neo4j
+  namespace: quilr
+spec:
+  serviceName: quilr-neo4j-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quilr-neo4j
+  template:
+    metadata:
+      labels:
+        app: quilr-neo4j
+    spec:
+      initContainers:
+        - name: neo4j-init
+          image: neo4j:5.25.1-community
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              chown -R neo4j:neo4j /data /var/lib/neo4j/conf /var/lib/neo4j/plugins
+              chmod -R 755 /data /var/lib/neo4j/conf /var/lib/neo4j/plugins
+              echo "dbms.security.allow_csv_import_from_file_urls=true" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.allow_format_migration=true" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.allow_upgrade=true" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.tx_log.rotation.retention_policy=100M size" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.security.auth_enabled=false" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.strict_validation=false" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "server.config.strict_validation.enabled=false" >> /var/lib/neo4j/conf/neo4j.conf
+              echo "dbms.cypher.lenient_create_relationship=true" >> /var/lib/neo4j/conf/neo4j.conf
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /data
+            - name: neo4j-conf
+              mountPath: /var/lib/neo4j/conf
+            - name: neo4j-plugins
+              mountPath: /var/lib/neo4j/plugins
+      containers:
+        - name: quilr-neo4j
+          image: neo4j:5.25.1-community
+          resources:
+            requests:
+              memory: "6Gi"
+              cpu: "1"
+            limits:
+              memory: "8Gi"
+              cpu: "2"
+          env:
+            - name: NEO4J_dbms_mode
+              value: SINGLE
+            - name: NEO4J_server_bolt_listen__address
+              value: "0.0.0.0:7687"
+            - name: NEO4J_server_config_strict__validation_enabled
+              value: "false"
+            - name: NEO4J_dbms_security_procedures_unrestricted
+              value: apoc.coll.*,apoc.load.*,apoc.*
+            - name: NEO4J_apoc_export_file_enabled
+              value: "true"
+            - name: NEO4J_apoc_import_file_use__neo4j__config
+              value: "true"
+            - name: NEO4J_AUTH
+              value: "neo4j/QUIuI23L*R$#%#&457Ip"
+            - name: NEO4J_apoc_ttl_enabled
+              value: "true"
+            - name: NEO4J_dbms_security_procedures_whitelist
+              value: apoc.coll.*,apoc.load.*,apoc.*
+            - name: NEO4J_server_memory_heap_initial__size
+              value: "3G"
+            - name: NEO4J_server_memory_heap_max__size
+              value: "6G"
+            - name: NEO4J_server_memory_pagecache_size
+              value: "2G"
+            - name: NEO4J_dbms_memory_transaction_total__max
+              value: "2G"
+            - name: NEO4J_dbms_cypher_lenient__create__relationship
+              value: "true"
+            - name: NEO4J_dbms_default__database
+              value: "neo4j"
+            - name: NEO4J_dbms_allow__upgrade
+              value: "true"
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /data
+            - name: neo4j-plugins
+              mountPath: /var/lib/neo4j/plugins
+            - name: neo4j-conf
+              mountPath: /var/lib/neo4j/conf
+      volumes:
+        - name: neo4j-data
+          persistentVolumeClaim:
+            claimName: neo4j-data-pvc
+        - name: neo4j-plugins
+          persistentVolumeClaim:
+            claimName: neo4j-plugins-pvc
+        - name: neo4j-conf
+          persistentVolumeClaim:
+            claimName: neo4j-conf-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quilr-neo4j-service
+  namespace: quilr
+spec:
+  type: ClusterIP
+  selector:
+    app: quilr-neo4j
+  ports:
+    - name: http
+      protocol: TCP
+      port: 7474
+      targetPort: 7474
+    - name: bolt
+      protocol: TCP
+      port: 7687
+      targetPort: 7687
