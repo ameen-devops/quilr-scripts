@@ -1,0 +1,28 @@
+global:
+  redis:
+    password: "QuIId2RD6wK>)^LLRoO"
+
+master:
+  persistence:
+    enabled: true
+    existingClaim: redis-master-pvc
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 750m
+      memory: 1Gi
+
+replica:
+  replicaCount: 1
+  persistence:
+    enabled: true
+    existingClaim: redis-replica-pvc
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 750m
+      memory: 1Gi
