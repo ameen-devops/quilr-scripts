@@ -1,0 +1,11 @@
+all images download 
+make tar of it
+see the size reduction
+delete the images from local
+import all the images and see sizes of it
+
+persistent data creation/ quilr-data directory creation and subfolders inside it creation
+make tar of all the helm charts after pulling the helm charts with custom values.yaml inside them
+echo everything throughout the script to see what changes have been done
+
+also make the secrets creation in the script at the last
