@@ -38,6 +38,11 @@ kubectl delete -f zookeeper.yaml -n quilr
 kubectl delete -f kafkaui.yaml -n quilr
 kubectl delete -f neo4j.yaml -n quilr
 kubectl delete vault vault -n quilr
+
+after deleting all the pvcs, deleting pvs
+
+kubectl delete pv elasticsearch-master-pv neo4j-conf-pv neo4j-data-pv neo4j-plugins-pv postgres-hostpath-pv redis-master-pv redis-replica-pv
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 all yamls deployment first
 
