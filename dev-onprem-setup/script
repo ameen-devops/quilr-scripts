@@ -1,3 +1,9 @@
+update postgres scripts
+delete the resources on azure
+check why webhook is geeting failed / github actions need to look upon
+
+------------------------------------------
+
 all yamls deployment first
 
 zookeeper
