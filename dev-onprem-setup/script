@@ -59,6 +59,7 @@ install the component
 versions: ( in preprod )
 -------------------------------
 redis- 20.11.5, chart-7.4.2
+postgres- 16.7.26, chart-17.6.0
 
 helm plugin install https://github.com/nikhilsbhat/helm-images
 helm images get oci://registry-1.docker.io/bitnamicharts/redis --output table
@@ -104,6 +105,10 @@ kubectl apply -f neo4j.yaml -n quilr
 kubectl create configmap quilr-initdb-scripts \
   --from-file=init-scripts/ \
   -n quilr
+
+helm plugin install https://github.com/nikhilsbhat/helm-images
+helm images get oci://registry-1.docker.io/bitnamicharts/postgres --output table
+helm images get oci://registry-1.docker.io/bitnamicharts/postgres --version 16.7.26 --output table
 
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
