@@ -36,6 +36,8 @@ kubectl delete pvc --all -n vault-infra
 kubectl delete -f kafka.yaml -n quilr
 kubectl delete -f zookeeper.yaml -n quilr
 kubectl delete -f kafkaui.yaml -n quilr
+kubectl delete -f neo4j.yaml -n quilr
+kubectl delete vault vault -n quilr
 ---------------------------------------------------------------------------------------------------------------------------------------------
 all yamls deployment first
 
