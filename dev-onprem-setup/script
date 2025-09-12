@@ -5,6 +5,29 @@ kafka
 kafkaui
 neo4j
 
+sudo crictl rmi docker.io/bitnami/kafka:3.5.1
+sudo crictl rmi docker.io/bitnamilegacy/zookeeper:3.9.0
+sudo crictl rmi docker.io/library/neo4j:5.25.1-community
+sudo crictl rmi docker.io/provectuslabs/kafka-ui:latest
+
+sudo crictl rmi docker.io/bitnami/kafka:3.5.1
+sudo crictl rmi docker.io/bitnamilegacy/zookeeper:3.9.0
+sudo crictl rmi docker.io/library/neo4j:5.25.1-community
+sudo crictl rmi docker.io/provectuslabs/kafka-ui:latest
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+Deleted: docker.io/bitnami/kafka:3.5.1
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+Deleted: docker.io/bitnamilegacy/zookeeper:3.9.0
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+Deleted: docker.io/library/neo4j:5.25.1
+Deleted: docker.io/library/neo4j:5.25.1-community
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+Deleted: docker.io/provectuslabs/kafka-ui:latest
+
 ----------------------------------------------------------
 
 kafka  ---> yaml
