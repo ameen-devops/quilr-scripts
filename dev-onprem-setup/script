@@ -61,8 +61,16 @@ kubectl apply -f kafkaui.yaml -n quilr
  sudo chown -R 7474:7474 /home/quilradmin/quilr-data/neo4j
  sudo chmod -R 755 /home/quilradmin/quilr-data/neo4j
 
- sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
- sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
+mkdir neo4j && cd neo4j
+wget https://github.com/neo4j/apoc/releases/download/5.25.1/apoc-5.25.1-core.jar
+sudo cp apoc-5.25.1-core.jar /home/quilradmin/quilr-data/neo4j/plugins/
+sudo chown 7474:7474 /home/quilradmin/quilr-data/neo4j/plugins/apoc-5.25.1-core.jar
+
+kubectl apply -f neo4j-pv.yaml -n quilr
+kubectl apply -f neo4j.yaml -n quilr
+
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
+sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
 sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1  ----> image in yaml
 #sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0 
