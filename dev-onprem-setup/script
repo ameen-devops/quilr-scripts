@@ -26,19 +26,23 @@ install the component
 
 versions: ( in preprod )
 -------------------------------
-redis- 20.11.5 chart-7.4.2
+redis- 20.11.5, chart-7.4.2
 
 helm plugin install https://github.com/nikhilsbhat/helm-images
 helm images get oci://registry-1.docker.io/bitnamicharts/redis --output table
 helm images get oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5 --output table
 sudo ctr -n k8s.io images pull  docker.io/bitnami/redis:7.4.2-debian-12-r6
-helm pull oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5  
+helm pull oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5 
+tar -xvzf redis-20.11.5.tgz
+cd redis
+
 helm upgrade --install redis ./redis-20.11.5.tgz \
   -f redis-values.yaml \
   -n quilr
 
-
-
+helm upgrade --install redis ./redis \
+  -f ../redis-values.yaml \
+  -n quilr
 
 
 sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1  ----> image in yaml
