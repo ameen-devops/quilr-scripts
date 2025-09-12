@@ -1,0 +1,5 @@
+kubectl create namespace vault-infra
+kubectl label namespace vault-infra name=vault-infra
+
+helm upgrade --install --wait vault-secrets-webhook oci://ghcr.io/bank-vaults/helm-charts/vault-secrets-webhook --namespace vault-infra
+kubectl get pods --namespace vault-infra
