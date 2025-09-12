@@ -159,6 +159,20 @@ tar -xzvf elasticsearch-21.5.0.tgz
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
+------------------------------------------------------------------------------------
+
+helm images get oci://ghcr.io/bank-vaults/helm-charts/vault-operator --output table
+helm images get oci://ghcr.io/bank-vaults/helm-charts/vault-operator --version 1.23.0 --output table
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/vault-operator:v1.23.0 
+helm pull oci://ghcr.io/bank-vaults/helm-charts/vault-operator --version 1.23.0
+tar -xzvf vault-operator-1.23.0.tgz
+
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/vault-operator:v1.23.0 
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/bank-vaults:v1.32.0 
+sudo ctr -n k8s.io images pull hashicorp/vault:1.14.8
+sudo ctr -n k8s.io images pull  ubuntu:bionic 
+
+
 sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1  ----> image in yaml
 #sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0 
 sudo ctr -n k8s.io images pull  docker.io/bitnamilegacy/zookeeper:3.9.0 ----> image in yaml
