@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-server
+  namespace: quilr
+spec:
+  selector:
+    app: kafka-server
+  ports:
+    - port: 9092
+      targetPort: 9092
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-server
+  namespace: quilr
+spec:
+  replicas: 1
+  serviceName: kafka-server
+  selector:
+    matchLabels:
+      app: kafka-server
+  template:
+    metadata:
+      labels:
+        app: kafka-server
+    spec:
+      hostname: kafka
+      containers:
+        - name: kafka
+          image: bitnami/kafka:3.5.1
+          securityContext:
+            runAsUser: 0
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+          ports:
+            - containerPort: 9092
+          env:
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: zookeeper-server:2181
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_LOG_RETENTION_HOURS
+              value: "1"
+            - name: KAFKA_CFG_LOG_RETENTION_MINUTES
+              value: "60"
+            - name: KAFKA_CFG_MAX_REQUEST_SIZE
+              value: "5242880"
+            - name: KAFKA_CFG_MESSAGE_MAX_BYTES
+              value: "10485760"
+            - name: KAFKA_CFG_REPLICA_FETCH_MAX_BYTES
+              value: "5242880"
+            - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
+              value: "5242880"
+            - name: KAFKA_CFG_JMX_PORT
+              value: "9999"
+            - name: KAFKA_CFG_LOG_ROLL_MS
+              value: "3600000"  # 60 minutes in milliseconds
+          volumeMounts:
+            - name: kafka-server-data
+              mountPath: /bitnami/kafka
+      volumes:
+        - name: kafka-server-data
+          persistentVolumeClaim:
+            claimName: kafka-server-pvc
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kafka-server-pv
+  namespace: quilr
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /home/quilradmin/quilr-data/kafka
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kafka-server-pvc
+  namespace: quilr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: kafka-server-pv
+  storageClassName: manual
