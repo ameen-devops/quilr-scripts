@@ -60,6 +60,7 @@ versions: ( in preprod )
 -------------------------------
 redis- 20.11.5, chart-7.4.2
 postgres- 16.7.26, chart-17.6.0
+elasticsearch-21.5.0, chart-8.17.4
 
 helm plugin install https://github.com/nikhilsbhat/helm-images
 helm images get oci://registry-1.docker.io/bitnamicharts/redis --output table
@@ -145,6 +146,16 @@ helm upgrade --install quilr ./postgresql \
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/postgres
 sudo chmod -R 775 /home/quilradmin/quilr-data/postgres
 --------------------------------------------------------------------------------------------------------
+
+helm images get oci://registry-1.docker.io/bitnamicharts/elasticsearch --output table
+helm images get oci://registry-1.docker.io/bitnamicharts/elasticsearch --version 21.5.0 --output table
+sudo ctr -n k8s.io images pull docker.io/bitnami/elasticsearch:8.17.4-debian-12-r0
+sudo ctr -n k8s.io images pull docker.io/bitnami/os-shell:12-debian-12-r40
+helm pull oci://registry-1.docker.io/bitnamicharts/elasticsearch --version 21.5.0  ( here version is the chart version )
+tar -xzvf elasticsearch-21.5.0.tgz 
+
+
+
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
