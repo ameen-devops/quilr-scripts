@@ -52,6 +52,8 @@ helm upgrade --install redis ./redis \
  sudo chown -R 7474:7474 /home/quilradmin/quilr-data/neo4j
  sudo chmod -R 755 /home/quilradmin/quilr-data/neo4j
 
+ sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
+ sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
 sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1  ----> image in yaml
 #sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0 
