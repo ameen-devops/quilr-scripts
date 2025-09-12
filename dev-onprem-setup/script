@@ -5,6 +5,16 @@ kafka
 kafkaui
 neo4j
 
+all bitnami helm deployments
+
+redis
+postgres
+elasticsearch
+
+helm bankvaults deployments
+
+hashicorp vault
+---------------------------------------------------------------------------
 sudo crictl rmi docker.io/bitnami/kafka:3.5.1
 sudo crictl rmi docker.io/bitnamilegacy/zookeeper:3.9.0
 sudo crictl rmi docker.io/library/neo4j:5.25.1-community
@@ -29,6 +39,60 @@ WARN[0000] Image connect using default endpoints: [unix:///run/containerd/contai
 Deleted: docker.io/provectuslabs/kafka-ui:latest
 
 ----------------------------------------------------------
+
+ sudo crictl rmi \
+docker.io/bitnami/elasticsearch:8.17.4-debian-12-r0 \
+docker.io/bitnami/os-shell:12-debian-12-r40 \
+docker.io/bitnami/os-shell:12-debian-12-r50 \
+docker.io/bitnami/redis:7.4.2-debian-12-r6 \
+docker.io/bitnami/redis:8.0.3-debian-12-r1 \
+docker.io/bitnami/redis:8.2.0-debian-12-r0 \
+docker.io/bitnami/postgresql:17.6.0-debian-12-r0 \
+docker.io/bitnami/postgresql:17.6.0-debian-12-r4 \
+docker.io/bitnamilegacy/postgresql:16 \
+docker.io/bitnamilegacy/postgresql:latest \
+docker.io/hashicorp/vault:1.14.1 \
+docker.io/hashicorp/vault:1.14.8 \
+docker.io/library/ubuntu:bionic \
+ghcr.io/bank-vaults/bank-vaults:v1.32.0 \
+ghcr.io/bank-vaults/vault-operator:v1.23.0 \
+ghcr.io/bank-vaults/vault-secrets-webhook:v1.22.0
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+Deleted: docker.io/hashicorp/vault:1.14.8
+E0912 13:48:27.376106 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/os-shell:12-debian-12-r40"
+E0912 13:48:27.376121 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/library/ubuntu:bionic"
+E0912 13:48:27.376139 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="ghcr.io/bank-vaults/vault-secrets-webhook:v1.22.0"
+E0912 13:48:27.376149 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnamilegacy/postgresql:16"
+E0912 13:48:27.376174 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = Unknown desc = failed to delete image reference \"sha256:94f392890b6ffc642b2c4a1b868006decf7f9cf1e10826acd96a897fe20aa756\" for \"sha256:94f392890b6ffc642b2c4a1b868006decf7f9cf1e10826acd96a897fe20aa756\": context deadline exceeded: unknown" image="docker.io/bitnami/elasticsearch:8.17.4-debian-12-r0"
+E0912 13:48:27.376184 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/postgresql:17.6.0-debian-12-r0"
+E0912 13:48:27.376074 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/redis:7.4.2-debian-12-r6"
+E0912 13:48:27.376073 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/hashicorp/vault:1.14.1"
+E0912 13:48:27.376215 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="ghcr.io/bank-vaults/bank-vaults:v1.32.0"
+E0912 13:48:27.376361 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/redis:8.0.3-debian-12-r1"
+E0912 13:48:27.376088 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/os-shell:12-debian-12-r50"
+E0912 13:48:27.376090 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnamilegacy/postgresql:latest"
+E0912 13:48:27.376198 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/redis:8.2.0-debian-12-r0"
+E0912 13:48:27.376203 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="ghcr.io/bank-vaults/vault-operator:v1.23.0"
+E0912 13:48:27.376543 1184960 log.go:32] "RemoveImage from image service failed" err="rpc error: code = DeadlineExceeded desc = context deadline exceeded" image="docker.io/bitnami/postgresql:17.6.0-debian-12-r4"
+error of removing image "ghcr.io/bank-vaults/vault-secrets-webhook:v1.22.0": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/os-shell:12-debian-12-r40": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/library/ubuntu:bionic": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnamilegacy/postgresql:16": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/elasticsearch:8.17.4-debian-12-r0": rpc error: code = Unknown desc = failed to delete image reference "sha256:94f392890b6ffc642b2c4a1b868006decf7f9cf1e10826acd96a897fe20aa756" for "sha256:94f392890b6ffc642b2c4a1b868006decf7f9cf1e10826acd96a897fe20aa756": context deadline exceeded: unknown
+error of removing image "docker.io/bitnami/postgresql:17.6.0-debian-12-r0": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "ghcr.io/bank-vaults/bank-vaults:v1.32.0": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/redis:8.0.3-debian-12-r1": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/redis:7.4.2-debian-12-r6": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/os-shell:12-debian-12-r50": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/redis:8.2.0-debian-12-r0": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/hashicorp/vault:1.14.1": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "ghcr.io/bank-vaults/vault-operator:v1.23.0": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnami/postgresql:17.6.0-debian-12-r4": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+error of removing image "docker.io/bitnamilegacy/postgresql:latest": rpc error: code = DeadlineExceeded desc = context deadline exceeded
+
+-----------------------------------------------------------------------------------------------------------------------------
+
 
 kafka  ---> yaml
 zookeeper ---> yaml
