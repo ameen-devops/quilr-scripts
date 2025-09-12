@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-master-pv
+  labels:
+    app: redis
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /home/quilradmin/quilr-data/redis/master   # local directory for master
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-master-pvc
+  namespace: quilr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-replica-pv
+  labels:
+    app: redis
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /home/quilradmin/quilr-data/redis/replica   # local directory for replica
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-replica-pvc
+  namespace: quilr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: manual
