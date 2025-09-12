@@ -1,3 +1,12 @@
+all yamls deployment first
+
+zookeeper
+kafka
+kafkaui
+neo4j
+
+----------------------------------------------------------
+
 kafka  ---> yaml
 zookeeper ---> yaml
 kafkaui ---> yaml
