@@ -22,14 +22,24 @@ plugin install
 how to see which images are there through helm commands with the chart
 download those images
 
+versions: ( in preprod )
+-------------------------------
+redis- 20.11.5 chart-7.4.2
+
+helm images get oci://registry-1.docker.io/bitnamicharts/redis --output table
+helm images get oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5 --output table
+
+helm pull oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5  
 download:
 
 helm plugin install https://github.com/nikhilsbhat/helm-images
-sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1
-sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0
-sudo ctr -n k8s.io images pull  docker.io/bitnamilegacy/zookeeper:3.9.0
-sudo ctr -n k8s.io images pull  provectuslabs/kafka-ui:latest
-sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/vault-operator:v1.23.0
+
+
+sudo ctr -n k8s.io images pull  docker.io/bitnami/kafka:3.5.1  ----> image in yaml
+#sudo ctr -n k8s.io images pull  docker.io/bitnami/zookeeper:3.9.0 
+sudo ctr -n k8s.io images pull  docker.io/bitnamilegacy/zookeeper:3.9.0 ----> image in yaml
+sudo ctr -n k8s.io images pull  provectuslabs/kafka-ui:latest ----> image in yaml
+sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/vault-operator:v1.23.0 
 sudo ctr -n k8s.io images pull ghcr.io/bank-vaults/bank-vaults:v1.32.0 
 sudo ctr -n k8s.io images pull hashicorp/vault:1.14.8
 sudo ctr -n k8s.io images pull  ubuntu:bionic 
