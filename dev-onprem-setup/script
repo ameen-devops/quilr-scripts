@@ -2,8 +2,41 @@ update postgres scripts
 delete the resources on azure
 check why webhook is geeting failed / github actions need to look upon
 
-------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
+quilradmin@ip-10-71-12-87:~$ helm list -A
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+my-neo4j                quilr           5               2025-08-19 16:31:57.053078457 +0000 UTC deployed        neo4j-5.25.1                    5.25.1
+quilr-db-elasticsearch  quilr           1               2025-09-04 06:43:25.291974368 +0000 UTC deployed        elasticsearch-21.5.0            8.17.4
+quilrprod-postgres-db   quilr           1               2025-09-02 14:02:29.024065252 +0000 UTC deployed        postgresql-16.7.26              17.6.0
+redis                   quilr           1               2025-09-04 13:28:00.140802438 +0000 UTC deployed        redis-20.11.5                   7.4.2
+vault-operator          quilr           1               2025-09-02 07:28:23.281684758 +0000 UTC deployed        vault-operator-1.23.0           v1.23.0
+vault-secrets-webhook   vault-infra     1               2025-09-02 08:04:09.450552342 +0000 UTC deployed        vault-secrets-webhook-1.22.0    v1.22.0
+
+helm uninstall my-neo4j quilr-db-elasticsearch quilrprod-postgres-db redis vault-operator -n quilr
+
+quilradmin@ip-10-71-12-87:~$ kubectl get pvc -n quilr
+NAME                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+elasticsearch-master-pvc   Bound    elasticsearch-master-pv                    5Gi        RWO            manual         <unset>                 8d
+kafka-server-pvc           Bound    kafka-server-pv                            10Gi       RWO            manual         <unset>                 9d
+neo4j-conf-pvc             Bound    neo4j-conf-pv                              5Gi        RWO            manual         <unset>                 7d6h
+neo4j-data-pvc             Bound    neo4j-data-pv                              5Gi        RWO            manual         <unset>                 7d6h
+neo4j-plugins-pvc          Bound    neo4j-plugins-pv                           5Gi        RWO            manual         <unset>                 7d6h
+postgres-hostpath-pvc      Bound    postgres-hostpath-pv                       10Gi       RWO            manual         <unset>                 10d
+redis-master-pvc           Bound    redis-master-pv                            5Gi        RWO            manual         <unset>                 8d
+redis-replica-pvc          Bound    redis-replica-pv                           5Gi        RWO            manual         <unset>                 8d
+vault-raft-vault-0         Bound    pvc-e4984be5-4874-45c9-b8fd-9ab205dda3b1   1Gi        RWO            local-path     <unset>                 10d
+zookeeper-data-pvc         Bound    zookeeper-data-pv                          3Gi        RWO            manual         <unset>                 9d
+
+kubectl delete pvc --all -n quilr
+
+helm uninstall vault-secrets-webhook -n vault-infra
+kubectl delete pvc --all -n vault-infra
+
+kubectl delete -f kafka.yaml -n quilr
+kubectl delete -f zookeeper.yaml -n quilr
+kubectl delete -f kafkaui.yaml -n quilr
+---------------------------------------------------------------------------------------------------------------------------------------------
 all yamls deployment first
 
 zookeeper
