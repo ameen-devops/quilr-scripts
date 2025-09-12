@@ -107,9 +107,44 @@ kubectl create configmap quilr-initdb-scripts \
   -n quilr
 
 helm plugin install https://github.com/nikhilsbhat/helm-images
+----------------------------------------------------------------------------------------------------------
 helm images get oci://registry-1.docker.io/bitnamicharts/postgres --output table
 helm images get oci://registry-1.docker.io/bitnamicharts/postgres --version 16.7.26 --output table
 
+helm images get oci://registry-1.docker.io/bitnamicharts/postgresql \
+  --version 16.7.26 \
+  --set image.repository=bitnamilegacy/postgresql \
+  --set image.tag=16.7.26 \
+  --set global.security.allowInsecureImages=true \
+  --output table
++-------------------+-------------+--------------------------------------------+
+|       Name        |    Kind     |                   Image                    |
++-------------------+-------------+--------------------------------------------+
+| sample-postgresql | StatefulSet | docker.io/bitnamilegacy/postgresql:16.7.26 |
++-------------------+-------------+--------------------------------------------+
+
+sudo ctr -n k8s.io images pull docker.io/bitnamilegacy/postgresql:16.7.26
+helm pull oci://registry-1.docker.io/bitnamicharts/redis --version 20.11.5 
+tar -xvzf redis-20.11.5.tgz
+----------------------------------------------------------------------------------------------------------
+
+kubectl create configmap quilr-initdb-scripts \
+  --from-file=init-scripts/ \
+  -n quilr
+
+helm images get oci://registry-1.docker.io/bitnamicharts/postgresql --output table
+helm images get oci://registry-1.docker.io/bitnamicharts/postgresql --version 16.7.27 --output table
+sudo ctr -n k8s.io images pull docker.io/bitnami/postgresql:17.6.0-debian-12-r4
+helm pull oci://registry-1.docker.io/bitnamicharts/postgresql --version 16.7.27 
+tar -xvzf postgresql-16.7.27.tgz
+
+helm upgrade --install quilr ./postgresql \
+  -f ../postgres-values.yaml \
+  -n quilr
+
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/postgres
+sudo chmod -R 775 /home/quilradmin/quilr-data/postgres
+--------------------------------------------------------------------------------------------------------
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 
