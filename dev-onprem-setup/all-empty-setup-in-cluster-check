@@ -1,0 +1,31 @@
+quilradmin@ip-10-71-12-87:~$ kubectl get all -A
+NAMESPACE            NAME                                           READY   STATUS    RESTARTS      AGE
+kube-system          pod/calico-kube-controllers-7967497bcf-rwgh4   1/1     Running   2 (14d ago)   28d
+kube-system          pod/calico-node-p5z25                          1/1     Running   2 (14d ago)   28d
+kube-system          pod/coredns-674b8bbfcf-85ccb                   1/1     Running   2 (14d ago)   28d
+kube-system          pod/coredns-674b8bbfcf-pwbtw                   1/1     Running   2 (14d ago)   28d
+kube-system          pod/etcd-ip-10-71-12-87                        1/1     Running   2 (14d ago)   28d
+kube-system          pod/kube-apiserver-ip-10-71-12-87              1/1     Running   2 (14d ago)   28d
+kube-system          pod/kube-controller-manager-ip-10-71-12-87     1/1     Running   2 (14d ago)   28d
+kube-system          pod/kube-proxy-wgdxg                           1/1     Running   2 (14d ago)   28d
+kube-system          pod/kube-scheduler-ip-10-71-12-87              1/1     Running   2 (14d ago)   28d
+local-path-storage   pod/local-path-provisioner-7d6dddf9dd-mdnml    1/1     Running   2 (14d ago)   28d
+
+NAMESPACE     NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
+default       service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP                  28d
+kube-system   service/kube-dns     ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   28d
+
+NAMESPACE     NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-system   daemonset.apps/calico-node   1         1         1       1            1           kubernetes.io/os=linux   28d
+kube-system   daemonset.apps/kube-proxy    1         1         1       1            1           kubernetes.io/os=linux   28d
+
+NAMESPACE            NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+kube-system          deployment.apps/calico-kube-controllers   1/1     1            1           28d
+kube-system          deployment.apps/coredns                   2/2     2            2           28d
+local-path-storage   deployment.apps/local-path-provisioner    1/1     1            1           28d
+
+NAMESPACE            NAME                                                 DESIRED   CURRENT   READY   AGE
+kube-system          replicaset.apps/calico-kube-controllers-7967497bcf   1         1         1       28d
+kube-system          replicaset.apps/coredns-674b8bbfcf                   2         2         2       28d
+local-path-storage   replicaset.apps/local-path-provisioner-7d6dddf9dd    1         1         1       28d
+quilradmin@ip-10-71-12-87:~$
