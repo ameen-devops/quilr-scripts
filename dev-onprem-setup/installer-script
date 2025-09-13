@@ -9,3 +9,10 @@ make tar of all the helm charts after pulling the helm charts with custom values
 echo everything throughout the script to see what changes have been done
 
 also make the secrets creation in the script at the last
+
+sudo mkdir -p /home/quilradmin/quilr-data/redis/master
+sudo mkdir -p /home/quilradmin/quilr-data/redis/replica
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/master
+sudo chmod -R 775 /home/quilradmin/quilr-data/redis/master
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/replica
+sudo chmod -R 775 /home/quilradmin/quilr-data/redis/replica
