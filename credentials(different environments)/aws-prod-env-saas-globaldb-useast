@@ -1,0 +1,2 @@
+BastionNode:
+ssh -i Bastion-GlobalAppDB.pem quilradmin@10.81.15.135
