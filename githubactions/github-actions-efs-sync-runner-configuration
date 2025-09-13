@@ -1,0 +1,89 @@
+
+CONFIGURING GITHUB ACTIONS RUNNER FOR content-management-service REPO SYNC TO EFS ON BASTION-HOST:
+*****************************************************************************************************
+
+mkdir actions-runner && cd actions-runner
+curl -o actions-runner-linux-x64-2.327.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.327.1/actions-runner-linux-x64-2.327.1.tar.gz
+tar xzf ./actions-runner-linux-x64-2.327.1.tar.gz
+./config.sh --url https://github.com/quilrbusiness/content-management-service --token BGKECJCH4JRMCTUVWDCRY3DISTB5E
+
+cat /etc/os-release
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+VERSION_ID="2023"
+PLATFORM_ID="platform:al2023"
+PRETTY_NAME="Amazon Linux 2023.8.20250715"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023"
+HOME_URL="https://aws.amazon.com/linux/amazon-linux-2023/"
+DOCUMENTATION_URL="https://docs.aws.amazon.com/linux/"
+SUPPORT_URL="https://aws.amazon.com/premiumsupport/"
+BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023"
+VENDOR_NAME="AWS"
+VENDOR_URL="https://aws.amazon.com/"
+
+
+YOU ENCOUNTER BELOW ERROR FOR fedora based amazon linux-2023
+
+Libicu's dependencies is missing for Dotnet Core 6.0
+Execute sudo ./bin/installdependencies.sh to install any missing Dotnet Core 6.0 dependencies.
+
+
+sudo ./bin/installdependencies.sh
+--------OS Information--------
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+VERSION_ID="2023"
+PLATFORM_ID="platform:al2023"
+PRETTY_NAME="Amazon Linux 2023.8.20250715"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023"
+HOME_URL="https://aws.amazon.com/linux/amazon-linux-2023/"
+DOCUMENTATION_URL="https://docs.aws.amazon.com/linux/"
+SUPPORT_URL="https://aws.amazon.com/premiumsupport/"
+BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023"
+VENDOR_NAME="AWS"
+VENDOR_URL="https://aws.amazon.com/"
+SUPPORT_END="2029-06-30"
+------------------------------
+"fedora"
+Can't detect current OS type based on /etc/os-release.
+Can't install dotnet core dependencies.
+You can manually install all required dependencies based on following documentation
+https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x
+
+
+ sudo yum install libicu
+./config.sh --url https://github.com/quilrbusiness/content-management-service --token BGKECJCH4JRMCTUVWDCRY3DISTB5E
+Enter the name of runner
+Enter any additional labels
+rest things keep as default and press enter
+
+./run.sh
+
+√ Connected to GitHub
+
+Current runner version: '2.327.1'
+Listening for jobs --- you should see
+
+
+ sudo ./svc.sh install
+Creating launch runner in /etc/systemd/system/actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service
+
+Run as user: quilradmin
+Run as uid: 1001
+gid: 1001
+Created symlink /etc/systemd/system/multi-user.target.wants/actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service → /etc/systemd/system/actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service.
+
+sudo systemctl start actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service
+sudo systemctl status actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service
+sudo systemctl enable actions.runner.quilrbusiness-content-management-service.aws-prod-apsouth-efs-runner.service
+
+
+create a new label as per environment to include in the github actions:
+
+aws-prod-apsouth
