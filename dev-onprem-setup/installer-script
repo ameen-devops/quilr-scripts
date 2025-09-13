@@ -16,3 +16,5 @@ sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/master
 sudo chmod -R 775 /home/quilradmin/quilr-data/redis/master
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/replica
 sudo chmod -R 775 /home/quilradmin/quilr-data/redis/replica
+
+sudo mkdir -p redis
