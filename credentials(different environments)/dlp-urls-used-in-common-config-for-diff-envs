@@ -1,0 +1,7 @@
+INDIA - dlpPrefix: "https://dlp-platform.quilr.ai"
+USA - dlpPrefix: "https://dlpone.quilr.ai"
+SPOTNANA - dlpPrefix: "https://dlpone.quilr.ai"
+UIPATH - dlpPrefix: "https://dlpone.quilr.ai"
+ 
+PREPROD -
+dlpPrefix: "https://dlppreprod.quilr.ai"
