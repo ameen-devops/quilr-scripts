@@ -93,8 +93,8 @@ AWS NEO4J VM:
 Version:	5.25.1
 neo4j private ip:  bolt://10.71.13.205:7687
 
-ssh -i neo4j-db-saas.pem ubuntu@10.71.13.205
-http://10.71.13.205:7687:7474
+ssh -i bastion.pem ubuntu@10.71.13.205
+http://10.71.13.205:7474
 username: neo4j
 QUI#4LR&nE04J!345
 
