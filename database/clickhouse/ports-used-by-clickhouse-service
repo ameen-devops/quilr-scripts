@@ -1,0 +1,12 @@
+Ports exposed by the ClickHouse service
+------------------------------------------------------
+
+Your service quilr-clickhouse has multiple ports:
+
+8123 → HTTP interface (ClickHouse HTTP API)
+
+9000 → Native TCP protocol (used by JDBC / clients like clickhouse-client) ✅
+
+9004, 9005, 9009 → internal replication / inter-server communication
+
+The port you need for DW_URL inside the cluster is 9000.
