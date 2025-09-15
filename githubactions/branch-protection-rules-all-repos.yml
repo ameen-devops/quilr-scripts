@@ -1,0 +1,77 @@
+name: Apply Branch Protection Rules to All Repos Except Excluded Ones
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  apply-branch-protection:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      ORG: quilrbusiness
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Apply Branch Protection Rules
+        run: |
+          echo "Fetching all repositories for organization: $ORG"
+
+          # These repositories will be excluded from protection
+          EXCLUDED_REPOS=("quilr-query-builder" "axis-analytics-job" "axis-ingestion-service" "quilr-common-lib" "quilr-helm-charts" "quilr-ai-config-manager" "dlp-default-classifier")
+
+          PAGE=1
+          while true; do
+            RESPONSE=$(curl -H "Authorization: token $GH_TOKEN" -s "https://api.github.com/orgs/$ORG/repos?per_page=100&page=$PAGE")
+            echo $RESPONSE
+            REPOS=$(echo "$RESPONSE" | jq -r '.[].name')
+            if [[ -z "$REPOS" ]]; then break; fi
+
+            for REPO in $REPOS; do
+              if [[ " ${EXCLUDED_REPOS[@]} " =~ " ${REPO} " ]]; then
+                echo "Skipping excluded repo: $REPO"
+                continue
+              fi
+
+              for BRANCH in main dev-onprem quilr-preprod; do
+                echo "Applying branch protection to $REPO ($BRANCH)"
+
+                # Determine required approvals
+                if [[ "$BRANCH" == "main" ]]; then
+                  APPROVALS=2
+                else
+                  APPROVALS=1
+                fi
+
+                curl -X PUT \
+                  -H "Authorization: token $GH_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  https://api.github.com/repos/$ORG/$REPO/branches/$BRANCH/protection \
+                  -d "{
+                    \"required_status_checks\": {
+                      \"strict\": true,
+                      \"contexts\": []
+                    },
+                    \"enforce_admins\": true,
+                    \"required_pull_request_reviews\": {
+                      \"dismiss_stale_reviews\": true,
+                      \"require_code_owner_reviews\": true,
+                      \"required_approving_review_count\": $APPROVALS,
+                      \"require_last_push_approval\": true
+                    },
+                    \"required_conversation_resolution\": true,
+                    \"restrictions\": {
+                      \"users\": [],
+                      \"teams\": []
+                    },
+                    \"allow_force_pushes\": false,
+                    \"allow_deletions\": false
+                  }"
+              done
+            done
+
+            PAGE=$((PAGE + 1))
+          done
