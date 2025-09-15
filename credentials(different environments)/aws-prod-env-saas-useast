@@ -84,7 +84,7 @@ QUIilLRneO#%^04j35ew79
 KAFKA-UI:
 -----------
 
-internal-a7d705abd3856468990a1cb9262f856d-822009744.us-east-1.elb.amazonaws.com 
+http://internal-a7d705abd3856468990a1cb9262f856d-807179600.us-east-1.elb.amazonaws.com:8080/
 
 
 ELASTIC-SEARCH:
