@@ -179,6 +179,10 @@ demo-quilr-web:
 
 ad4fbe3222718468ca87588b6c9d3bf3-488135641.us-east-1.elb.amazonaws.com at port 3000
 
+https://secure.quilr.ai
+user: monitor@quilr.ai
+password:  8&E3C**E6Qk8
+
 ------------------------------------------------------------------------------
 service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 ------------------------------------------------------------------------------
