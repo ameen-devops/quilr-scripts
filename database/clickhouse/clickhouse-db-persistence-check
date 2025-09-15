@@ -1,0 +1,90 @@
+[quilradmin@ip-10-71-12-28 ~]$ kubectl get pods -n quilr | grep -i clickhouse
+quilr-clickhouse-shard0-0                                    1/1     Running     0              6d1h
+[quilradmin@ip-10-71-12-28 ~]$ kubectl exec -it quilr-clickhouse-shard0-0 -n quilr -- bash
+I have no name!@quilr-clickhouse-shard0-0:/$ ls -lh /bitnami/clickhouse/data
+total 48K
+drwxr-s---.  2 1001 1001 4.0K Sep  9 13:08 access
+drwxr-s---.  5 1001 1001 4.0K Sep  9 12:20 data
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 flags
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 format_schemas
+drwxr-s---.  2 1001 1001 4.0K Sep  9 12:20 metadata
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 metadata_dropped
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 preprocessed_configs
+-rw-r-----.  1 1001 1001   56 Sep  9 11:12 status
+drwxr-s---. 15 1001 1001 4.0K Sep 14 13:10 store
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 tmp
+drwxr-s---.  2 1001 1001 4.0K Sep  9 11:12 user_files
+-rw-r-----.  1 1001 1001   36 Sep  9 11:12 uuid
+I have no name!@quilr-clickhouse-shard0-0:/$ cd data
+bash: cd: data: No such file or directory
+I have no name!@quilr-clickhouse-shard0-0:/$ ls
+bin  bitnami  boot  dev  docker-entrypoint-initdb.d  docker-entrypoint-startdb.d  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+I have no name!@quilr-clickhouse-shard0-0:/$ cd bitnami/
+I have no name!@quilr-clickhouse-shard0-0:/bitnami$ ls
+clickhouse
+I have no name!@quilr-clickhouse-shard0-0:/bitnami$ cd clickhouse/
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse$ ls
+data  etc  lost+found
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse$ cd dtaa
+bash: cd: dtaa: No such file or directory
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse$ ls
+data  etc  lost+found
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse$ cd data
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse/data$ ls
+access  data  flags  format_schemas  metadata  metadata_dropped  preprocessed_configs  status  store  tmp  user_files  uuid
+I have no name!@quilr-clickhouse-shard0-0:/bitnami/clickhouse/data$ exit
+exit
+[quilradmin@ip-10-71-12-28 ~]$ kubectl get pv pvc-fd6e32d0-5421-4472-a4eb-239ccc797de0 -n quilr -o yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/migrated-to: ebs.csi.aws.com
+    pv.kubernetes.io/provisioned-by: kubernetes.io/aws-ebs
+    volume.kubernetes.io/provisioner-deletion-secret-name: ""
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: ""
+  creationTimestamp: "2025-09-09T11:12:09Z"
+  finalizers:
+  - external-provisioner.volume.kubernetes.io/finalizer
+  - kubernetes.io/pv-protection
+  - external-attacher/ebs-csi-aws-com
+  labels:
+    topology.kubernetes.io/region: us-east-1
+    topology.kubernetes.io/zone: us-east-1a
+  name: pvc-fd6e32d0-5421-4472-a4eb-239ccc797de0
+  resourceVersion: "85081860"
+  uid: 8cfeca9c-33ea-400b-bd47-31b967743f94
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-08de4693ee495b0ac
+  capacity:
+    storage: 8Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: data-quilr-clickhouse-shard0-0
+    namespace: quilr
+    resourceVersion: "85081832"
+    uid: fd6e32d0-5421-4472-a4eb-239ccc797de0
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values:
+          - us-east-1a
+        - key: topology.kubernetes.io/region
+          operator: In
+          values:
+          - us-east-1
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: gp2
+  volumeMode: Filesystem
+status:
+  lastPhaseTransitionTime: "2025-09-09T11:12:09Z"
+  phase: Bound
+[quilradmin@ip-10-71-12-28 ~]$ 
