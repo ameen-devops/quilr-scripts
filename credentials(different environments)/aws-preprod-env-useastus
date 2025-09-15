@@ -14,7 +14,9 @@ neo4j
 kafka-ui
 vault-ca.crt
 quilr-elasticsearch-db-ca.crt 
-
+kafka-server
+quilr-be-oauth
+quilr-scheduler-service
 
 BASTION NODE: Node to connect to EKS cluster:
 
@@ -65,7 +67,8 @@ password : AKiBas4ax9bIzkYO4ske
 Redis:
 --------
 
-hostname: a8050ad6bbd12437cb2c5853e409c2aa-841388620.us-east-1.elb.amazonaws.com 
+hostname: my-redis-master
+a8050ad6bbd12437cb2c5853e409c2aa-841388620.us-east-1.elb.amazonaws.com 
 port: 6379
 password: QuIId2RD6wK>)^LLRoO
 
@@ -77,7 +80,10 @@ root token: hvs.pYI41hbbAoIdDuiwxg6mlJGF
 
 CLICKHOUSE:
 ------------
-
+http://internal-a1d304a003eb641a28ea371e911a6bc1-22548389.us-east-1.elb.amazonaws.com
+http://internal-a1d304a003eb641a28ea371e911a6bc1-22548389.us-east-1.elb.amazonaws.com:8123/
+username: quilradmin 
+password: QU1lr$F345#we
 
 NEO4J:
 --------
@@ -85,7 +91,7 @@ NEO4J:
 AWS NEO4J VM:
 
 Version:	5.25.1
-neo4j private ip: 10.81.13.250
+neo4j private ip: 
 
 ssh -i neo4j-db-saas.pem ubuntu@10.81.13.250
 http://10.81.13.250:7474
@@ -95,66 +101,70 @@ QUIilLRneO#%^04j35ew79
 KAFKA-UI:
 -----------
 
-http://internal-a7d705abd3856468990a1cb9262f856d-807179600.us-east-1.elb.amazonaws.com:8080/
+http://internal-ac9d252ab1d544df89e9ae5806d7024a-2030649797.us-east-1.elb.amazonaws.com:8080
 
 
 ELASTIC-SEARCH:
 ---------------
 
+internal-ad1c01e5f5c564ff1bb7e58cecd295d5-237566436.us-east-1.elb.amazonaws.com:9200
+username: elastic
+password: QU#ILRe$%LLastic@457
 
-internal-a5b4b521d99b44f5fa295eedc7125348-560704608.us-east-1.elb.amazonaws.com:9200
-Password: 2XDwzXd4DmJiCeJW
 
  vault-ca.crt
+
 -----BEGIN CERTIFICATE-----
-MIIDazCCAlOgAwIBAgIQRUP2npdQuFX2jtNEZZDb8jANBgkqhkiG9w0BAQsFADBA
-MRUwEwYDVQQKEwxCYW56YWkgQ2xvdWQxJzAlBgNVBAMTHkJhbnphaSBDbG91ZCBH
-ZW5lcmF0ZWQgUm9vdCBDQTAeFw0yNTA3MTYxMjUyMTVaFw0yNjA3MTYxMjUyMTVa
-MEAxFTATBgNVBAoTDEJhbnphaSBDbG91ZDEnMCUGA1UEAxMeQmFuemFpIENsb3Vk
-IEdlbmVyYXRlZCBSb290IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEApb/G+n79n3/OTtnR+Ap28nznJC81sAuGMTPqmt81etD8EME9zyeKWe3klWGC
-9a+MLffgbYVD8ytn9g1fz+xjUdfNMNZqUfVvF/IlB4gZDvOp7xwRubq88Lkdz+m8
-bmyQJ+VC0jMV7zVNm67KmsVQdIK/Ac/kvcjYqH4+AgEhU4ekSDiNnhTsFDI4gXK9
-lQLC2G+DeeUIqWPUy/RvKiwtPbUFwt3IIaz6alba8gxunjL06o2OBD07bWsNeyJE
-qdZ896MQFA6qJlspoEnQ4MfA1rZvZsJ9Ahoo6SbNV/UjLzMl+rp+ihIo59jaMTmt
-2uQ+i1K6JFbQ2WfOAlp7BXKzTQIDAQABo2EwXzAOBgNVHQ8BAf8EBAMCAgQwHQYD
-VR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMA8GA1UdEwEB/wQFMAMBAf8wHQYD
-VR0OBBYEFNl7W6puDADLobeqOQQjX1ZpnAJDMA0GCSqGSIb3DQEBCwUAA4IBAQBV
-W/WFls1M8XQMNbN/pLmpys1KUPfh6HogPAw9JWX9MJ60t1vq6Ssj6VL8HavSHI0S
-yJwpge48v6Kfu0D1Lrgh10ryknPLZHpp/+fyUbYrJh4lLmjPgjh7rMZtMqP9xe6x
-smlVVkAVpEfMaKUmkUWsdz66j4LOiQd2s5wrykUwQnsgzuLg01LV4PBxU39yz2DF
-CNr3KNXwb+5QVmwvxeTfWNhP5Zex1Xat9PJWlFHpmSTL38onoY7aU0JaUrWU8SyG
-9TYqUhSPkw3fNxWgqVP3N3JrJWvxlgxqZOmsdAwcGPvZ/f+yXJLShDvzORj1Ers+
-isNWzAgeY9K4cmQrZlT9
+MIIDbDCCAlSgAwIBAgIRAK395n3eUEf3iwfd3RFZQe8wDQYJKoZIhvcNAQELBQAw
+QDEVMBMGA1UEChMMQmFuemFpIENsb3VkMScwJQYDVQQDEx5CYW56YWkgQ2xvdWQg
+R2VuZXJhdGVkIFJvb3QgQ0EwHhcNMjUwNDEwMTM0NDUxWhcNMjYwNDEwMTM0NDUx
+WjBAMRUwEwYDVQQKEwxCYW56YWkgQ2xvdWQxJzAlBgNVBAMTHkJhbnphaSBDbG91
+ZCBHZW5lcmF0ZWQgUm9vdCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAMhagb6QkY1ntUr6hPtw+dmwQQnTgy8n9a2F0YHP1c2zjvWGOMdnilehrG2s
+ys3xakXzCUMszE1z/OsIr8lj0X5nxRhMoFqncBwOmerpFiSylyz5E7+VGeYusozD
+Cj3+wADPr4vfZ6EDfJ//lUejA7xsW11LUUWO+RQoJd+GAouyc7fvdR0hv4qmPo2o
+/e8pGZHzeiKrpqU23lWQy+nemM/M6I1AMkl/bzRC4RftRHVwwzRMxkr8EPlpP0UB
+Zes2koryXAAtj8TTz/aogj3aRY57IQe98RNr1fejY5UMChXCuVp9ewKTnkrtZY5Z
+UxlbVRHae1VG11CfKBlN16SDvNkCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgIEMB0G
+A1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0G
+A1UdDgQWBBRyeV8bbj8gPKnmGEMg87T2Q+1V9zANBgkqhkiG9w0BAQsFAAOCAQEA
+NO+yeGANWD9hz29L694AwqnexebTNJCyyGTBWxEaFisnM0YCjOnBIIAmNDqFTWIW
+QN0nOVzcrj5AZwpItHOXTXYt/8o1TWBYj/YOGHEX5wtgGpYxFxIkXiVjMmTlQd5k
+r8wsbNmcQiIBfhX53SP2sKP0paULPhv1gCb78VfCS490KdjhAsW7bhLRPpWd2Cz2
+P2uBjxiQi/U4+c42mc+DIZg1rLQExRacxsAxP89HdVuISMSwBvtImgyhDNcwdIXe
+XKQFs9vwz310voSfPgFMIUxww2SAeMvLAk21EMrO8z8u6hDQSby3hL4ZdDzmAi09
+l0ytbYoUYrQDRZ3zAkwkFg==
 -----END CERTIFICATE-----
 
 
- quilr-elasticsearch-db-ca.crt
------BEGIN CERTIFICATE-----
-MIIDITCCAgmgAwIBAgIQVT9h1yDBhjiXP1HWgNCtxDANBgkqhkiG9w0BAQsFADAb
-MRkwFwYDVQQDExBlbGFzdGljc2VhcmNoLWNhMB4XDTI1MDcxNjE0MzgyMFoXDTI2
-MDcxNjE0MzgyMFowGzEZMBcGA1UEAxMQZWxhc3RpY3NlYXJjaC1jYTCCASIwDQYJ
-KoZIhvcNAQEBBQADggEPADCCAQoCggEBAJV+3Uw1+t42Dgq8KtRr2e5V0qd/fyWt
-LqmzD7K5S+nANSW4VB1+cTNz8ghxxPPbvWh2prmOhsrIEIC98qALP94xQB8YB40O
-Clmn/tTuSiryrkVc5AKlppo+cf2ColD7C8UPGNL67uKdi4u/n34FaBLNxWH5j9of
-DVzarTvkmhwIDE6tHxHjkgoOVmTho5mOcjkGxYGodBeMt3UTWO163Cajy7yBjA3Y
-7z9CuZqSk9TO994Rmss+921Hm0dYpfWWry1L9WP9UbABfvK9lo3cCofQqUuIYZps
-2NZnqcBjengZ9ex1MgU1iVCGZAJdsBU1LgqQvhEOryXzGiy+uORAEvcCAwEAAaNh
-MF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-AjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTqy+V4l+0GRxbeZPrHIA8VDSfn
-5DANBgkqhkiG9w0BAQsFAAOCAQEAQn84C27NI5Rl3NPuO/Jr/OmQuUuyDM8/E+QR
-sgeKKWilEFRPPM8APQHsqcU0STXjypr/AkQvwPUZkQqYJiqjOqfM2cXgdh2Q9gGX
-8syi77SmeY/GG+1Wo1ZDm0hOp4rkXsdf0Vi71U++/SwlbrIl8SKUGaezR8O0Qjrn
-nXw9MVZnbJ1tswgpN7Fi81abOMRUs7jkKMHuVofRwIqhD/2GGOOHG4QuuA1h636F
-4J8bhruGTnNO00uwsdnkYFLHuBho+DOWvL74LNMWFdsDdHRhZAn4z2I/5bMRgW7e
-Nfcuc1SIjYjCjB9onepMZIqAlNJ/9R1MUY+LHzRe7yx8HL69DQ==
------END CERTIFICATE-----
+ quilr-elasticsearch-db-ca.crt ( need to be added )
 
 
 
+kafka-server internal-url:
+---------------------------------
+
+internal-a551b976bbaf64556861d766cb46eeb8-1624155165.us-east-1.elb.amazonaws.com 
+
+quilr-be-oauth:
+-------------------
+
+internal-a160d4bce976f4a02945119d2dd89db4-156228054.us-east-1.elb.amazonaws.com 
+
+quilr-scheduler-service:
+-------------------------
+ internal-a97970c57d8754941bb56ffc39832559-990889095.us-east-1.elb.amazonaws.com at port 8000
+
+demo-quilr-web:
+----------------
+
+ad4fbe3222718468ca87588b6c9d3bf3-488135641.us-east-1.elb.amazonaws.com at port 3000
+
+------------------------------------------------------------------------------
 service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-
+------------------------------------------------------------------------------
 change under quilr app in microsoft entra id
 
 https://intel.quilr.ai/bff/auth/auth/microsoft/callback
 https://intel.quilr.ai/bff/auth/auth/integration-admin-landing/microsoft
+------------------------------------------------------------------------------
