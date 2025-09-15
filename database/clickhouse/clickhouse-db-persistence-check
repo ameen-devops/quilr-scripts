@@ -88,3 +88,114 @@ status:
   lastPhaseTransitionTime: "2025-09-09T11:12:09Z"
   phase: Bound
 [quilradmin@ip-10-71-12-28 ~]$ 
+
+---------------------------------------------------
+
+Perfect — this YAML gives us the full picture 🔍.
+
+1. Where your data is
+
+From the PV definition:
+
+awsElasticBlockStore:
+  fsType: ext4
+  volumeID: vol-08de4693ee495b0ac
+
+
+Your ClickHouse data is stored on the EBS volume vol-08de4693ee495b0ac in us-east-1a.
+The filesystem is ext4, and Kubernetes mounts it into the pod at /bitnami/clickhouse.
+
+2. How to access the data if the pod isn’t running
+
+Since this is a raw EBS volume, you have two main options:
+
+🔹 Option A: Mount it on the Kubernetes node
+
+Find which worker node had the pod:
+
+kubectl get pod quilr-clickhouse-shard0-0 -n quilr -o wide
+
+
+→ Look at the NODE column.
+
+SSH into that node (if you have access).
+The EBS volume will show up as a device (e.g. /dev/nvme1n1).
+
+Mount it:
+
+lsblk
+sudo mkdir /mnt/clickhouse
+sudo mount /dev/nvme1n1 /mnt/clickhouse
+ls /mnt/clickhouse
+
+
+You’ll see directories like data/ and metadata/ for ClickHouse.
+
+⚠️ Caution: Don’t write to this volume outside of Kubernetes if you still want to reuse it with ClickHouse. Treat it as read-only.
+
+🔹 Option B: Mount it on a helper EC2 instance
+
+If the pod is stuck and you want to investigate:
+
+Scale down the statefulset to release the PVC:
+
+kubectl scale statefulset quilr-clickhouse-shard0 --replicas=0 -n quilr
+
+
+Go to AWS Console → EC2 → Volumes, find vol-08de4693ee495b0ac.
+Detach it from the EKS node if it’s still attached.
+
+Attach it to a helper EC2 instance in the same AZ (us-east-1a).
+
+On that helper instance:
+
+lsblk
+sudo mkdir /mnt/clickhouse
+sudo mount /dev/nvme1n1 /mnt/clickhouse
+ls -lh /mnt/clickhouse
+
+
+Now you’ll see the same ClickHouse files.
+
+3. What you’ll actually see
+
+The volume contains the Bitnami ClickHouse data dir (/bitnami/clickhouse).
+
+Inside:
+
+data/ → actual tables and parts (not human-readable rows).
+
+metadata/ → table definitions.
+
+access/ → user configs.
+
+Example layout:
+
+/bitnami/clickhouse/
+  ├── access/
+  ├── data/
+  │   ├── default/
+  │   │   └── test_persist/
+  │   │       ├── detached/
+  │   │       ├── format_version.txt
+  │   │       ├── metadata.xml
+  │   │       ├── store/...
+  ├── metadata/
+  └── tmp/
+
+4. Persistence gotcha ⚠️
+
+Your persistentVolumeReclaimPolicy is Delete.
+👉 That means: if you ever delete the PVC (data-quilr-clickhouse-shard0-0), Kubernetes will delete vol-08de4693ee495b0ac in AWS.
+If you want to keep the volume safe even after PVC deletion, change it to Retain:
+
+kubectl patch pv pvc-fd6e32d0-5421-4472-a4eb-239ccc797de0 \
+  -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+
+
+✅ Summary:
+Your ClickHouse data is in EBS volume vol-08de4693ee495b0ac (ext4, us-east-1a).
+If the pod isn’t running, you can still mount that volume either on the Kubernetes node or on any helper EC2 instance.
+Be aware of the Delete reclaim policy — if the PVC is deleted, the EBS volume goes too.
+
+Do you want me to show you step-by-step how to safely make a copy/snapshot of that EBS volume so you always have a backup, even if the PVC gets deleted?
