@@ -65,15 +65,18 @@ password : AKiBas4ax9bIzkYO4ske
 Redis:
 --------
 
-hostname: internal-a2ea206ba595d405f80ad3ae704d473c-1904017298.us-east-1.elb.amazonaws.com 
+hostname: a8050ad6bbd12437cb2c5853e409c2aa-841388620.us-east-1.elb.amazonaws.com 
 port: 6379
-password: Qu0IId2RrD6iIwKLLRz45^)Q
+password: QuIId2RD6wK>)^LLRoO
 
 VAULT:
 -------
 
-https://aa8829ce0b9534ac2ad28bcc54082db3-1263915867.us-east-1.elb.amazonaws.com:8200
-root token:  hvs.I8jnwm62RKUMpc3LrlE0iwsd
+https://ac49841c733d1401fa103630e2a56f8c-1970831486.us-east-1.elb.amazonaws.com:8200
+root token: hvs.pYI41hbbAoIdDuiwxg6mlJGF
+
+CLICKHOUSE:
+------------
 
 
 NEO4J:
