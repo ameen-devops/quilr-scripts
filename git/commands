@@ -1,0 +1,4 @@
+git pull
+  (use "git pull" to update your local branch)
+
+git checkout <branch-name>
