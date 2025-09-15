@@ -1,0 +1,90 @@
+name: Ensure Webhooks Exist
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour
+  workflow_dispatch:     # Manual run option
+
+permissions:
+  contents: read
+
+jobs:
+  ensure-webhooks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure webhook on all repos
+        env:
+          GHUB_TOKEN : ${{ secrets.GHUB_TOKEN }}
+          ORG: quilrbusiness
+          WEBHOOK_URL: https://ci.quilr.ai/github-webhook/
+        run: |
+          echo "Fetching repositories from organization '$ORG'..."
+
+          page=1
+          per_page=100
+          repos=()
+
+          while : ; do
+            resp=$(curl -s -H "Authorization: Bearer $GHUB_TOKEN" \
+                         -H "Accept: application/vnd.github+json" \
+                         "https://api.github.com/orgs/$ORG/repos?per_page=$per_page&page=$page")
+                         
+            echo $resp
+            names=$(echo "$resp" | jq -r '.[].name')
+            [ -z "$names" ] && break
+
+            repos+=($names)
+            ((page++))
+          done
+
+          echo "🔍 Checking webhook presence and adding if missing..."
+
+          for repo in "${repos[@]}"; do
+            echo "➡️  $repo"
+
+            # Skip .github (special config repo)
+            if [ "$repo" == ".github" ]; then
+              echo "⚠️  Skipping .github (organization config repo)"
+              continue
+            fi
+
+            # Skip archived repos
+            archived=$(curl -s -H "Authorization: Bearer $GHUB_TOKEN" \
+                             "https://api.github.com/repos/$ORG/$repo" | jq -r '.archived')
+
+            if [ "$archived" == "true" ]; then
+              echo "⚠️  Skipping archived repo: $repo"
+              continue
+            fi
+
+            hooks=$(curl -s -H "Authorization: Bearer $GHUB_TOKEN" \
+                         "https://api.github.com/repos/$ORG/$repo/hooks")
+
+            if ! echo "$hooks" | jq -e 'type == "array"' > /dev/null; then
+              echo "⚠️  Skipping $repo: unexpected hooks format"
+              continue
+            fi
+
+            exists=$(echo "$hooks" | jq -r --arg URL "$WEBHOOK_URL" '.[] | select(.config.url == $URL) | .url')
+
+            if [ -n "$exists" ]; then
+              echo "✅ Webhook already exists"
+            else
+              echo "➕ Adding webhook to $repo"
+              curl -s -X POST \
+                -H "Authorization: Bearer $GHUB_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/$ORG/$repo/hooks" \
+                -d "{
+                  \"name\": \"web\",
+                  \"active\": true,
+                  \"events\": [\"push\"],
+                  \"config\": {
+                    \"url\": \"$WEBHOOK_URL\",
+                    \"content_type\": \"json\",
+                    \"insecure_ssl\": \"0\"
+                  }
+                }"
+            fi
+            echo "-----------------------------"
+          done
