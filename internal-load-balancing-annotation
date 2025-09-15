@@ -1,0 +1,1 @@
+service.beta.kubernetes.io/aws-load-balancer-internal: "true"
