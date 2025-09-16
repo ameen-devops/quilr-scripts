@@ -1,0 +1,212 @@
+ubuntu@ip-10-71-2-148:~$ sudo systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2025-08-26 06:50:09 UTC; 2 weeks 6 days ago
+       Docs: man:nginx(8)
+   Main PID: 3566456 (nginx)
+      Tasks: 5 (limit: 19168)
+     Memory: 8.8M
+        CPU: 52.841s
+     CGroup: /system.slice/nginx.service
+             ├─3428508 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─3428509 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─3428510 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─3428511 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             └─3566456 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+
+Aug 26 06:50:08 ip-10-71-2-148 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Aug 26 06:50:09 ip-10-71-2-148 systemd[1]: Started A high performance web server and a reverse proxy server.
+
+ubuntu@ip-10-71-2-148:~$  sudo certbot --nginx -d  ci.quilr.ai
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Renewing an existing certificate for ci.quilr.ai
+
+Certbot failed to authenticate some domains (authenticator: nginx). The Certificate Authority reported these problems:
+  Domain: ci.quilr.ai
+  Type:   connection
+  Detail: 54.164.194.158: Fetching http://ci.quilr.ai/.well-known/acme-challenge/SX99kplyQZOrAac-HR1rVFRjKFeW65hPcbGPNyTA99w: Timeout during connect (likely firewall problem)
+
+Hint: The Certificate Authority failed to verify the temporary nginx configuration changes made by Certbot. Ensure the listed domains point to this nginx server and that it is accessible from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+ubuntu@ip-10-71-2-148:~$ ^C
+ubuntu@ip-10-71-2-148:~$  sudo certbot --nginx -d  ci.quilr.ai
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Renewing an existing certificate for ci.quilr.ai
+
+Certbot failed to authenticate some domains (authenticator: nginx). The Certificate Authority reported these problems:
+  Domain: ci.quilr.ai
+  Type:   connection
+  Detail: 54.164.194.158: Fetching http://ci.quilr.ai/.well-known/acme-challenge/RHi-12Uhc47gsHfJ_weFg17QNvLzOxNp8HS2pehgV2w: Timeout during connect (likely firewall problem)
+
+Hint: The Certificate Authority failed to verify the temporary nginx configuration changes made by Certbot. Ensure the listed domains point to this nginx server and that it is accessible from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+ubuntu@ip-10-71-2-148:~$ sudo systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2025-08-26 06:50:09 UTC; 2 weeks 6 days ago
+       Docs: man:nginx(8)
+   Main PID: 3566456 (nginx)
+      Tasks: 5 (limit: 19168)
+     Memory: 8.3M
+        CPU: 52.937s
+     CGroup: /system.slice/nginx.service
+             ├─1144214 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─1144215 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─1144216 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             ├─1144217 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             └─3566456 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+
+Aug 26 06:50:08 ip-10-71-2-148 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Aug 26 06:50:09 ip-10-71-2-148 systemd[1]: Started A high performance web server and a reverse proxy server.
+
+ubuntu@ip-10-71-2-148:~$ sudo certbot --nginx -d  ci.quilr.ai
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Renewing an existing certificate for ci.quilr.ai
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/ci.quilr.ai/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/ci.quilr.ai/privkey.pem
+This certificate expires on 2025-12-15.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for ci.quilr.ai to /etc/nginx/sites-enabled/jenkins.conf
+Your existing certificate has been successfully renewed, and the new certificate has been installed.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ubuntu@ip-10-71-2-148:
+
+ubuntu@ip-10-71-2-148:~$ history
+    1  sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    2  echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]"   https://pkg.jenkins.io/debian-stable binary/ | sudo tee   /etc/apt/sources.list.d/jenkins.list > /dev/null
+    3  sudo apt-get update
+    4  sudo apt-get install jenkins
+    5  jenkins
+    6  sudo apt update
+    7  sudo apt install fontconfig openjdk-21-jre
+    8  java -version
+    9  sudo systemctl enable jenkins
+   10  sudo systemctl start jenkins
+   11  sudo systemctl status jenkins
+   12  ls
+   13  cat /var/lib/jenkins/secrets/initialAdminPassword
+   14  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   15  sudo hostname global-jenkins-master
+   16  bash
+   17  pwd
+   18  sudo apt update && sudo apt install nginx -y
+   19  sudo systemctl start nginx
+   20  sudo systemctl status nginx
+   21  sudo systemctl enable nginx
+   22  netstat -anp
+   23  sudo apt install certbot python3-certbot-nginx -y
+   24  dig ci.quilr.ai
+   25  ping ci.quilr.ai
+   26  exit
+   27  ping ci.quilr.ai
+   28  ping google.com
+   29  ping ci.quilr.ai
+   30  nslookup ci.quilr.ai
+   31  curl.me
+   32  ipconfig.me
+   33  curl ipconfig.me
+   34  curl ifconfig.me
+   35  ping 54.164.194.158
+   36  curl 54.164.194.158
+   37  nslooup 54.164.194.158
+   38  nslookup 54.164.194.158
+   39  nslookup ci.quilr.ai
+   40  ping ci.quilr.ai
+   41  sudo certbot --nginx -d  ci.quilr.ai
+   42  cat /var/log/letsencrypt/letsencrypt.log
+   43  sudo cat /var/log/letsencrypt/letsencrypt.log
+   44  sudo certbot --nginx -d  ci.quilr.ai
+   45  vim /etc/nginx/sites-available/jenkins.conf
+   46  netstat -anp
+   47  sudo vim /etc/nginx/sites-available/jenkins.conf
+   48  sudo systemctl restart nginx
+   49  sudo systemctl restart jenkins
+   50  sudo nginx -t && sudo systemctl reload nginx
+   51  netstat -anp
+   52  sudo systemctl status nginx
+   53  sudo vim /etc/nginx/sites-available/jenkins.conf
+   54  ls -lrt /etc/letsencrypt/live/
+   55  sudo ls -lrt /etc/letsencrypt/live/
+   56  sudo ls -lrt /etc/letsencrypt/live/ci.quilr.ai
+   57  sudo vim /etc/nginx/sites-available/jenkins.conf
+   58  sudo nginx -t && sudo systemctl reload nginx
+   59  sudo systemctl status nginx
+   60  sudo vim /etc/nginx/sites-available/jenkins.conf
+   61  curl -kv http://localhost:8080
+   62  sudo vim /etc/nginx/sites-available/jenkins.conf
+   63  sudo systemctl status nginx
+   64  tail -f /var/log/nginx/access.log
+   65  tail -f /var/log/nginx/error.log
+   66  tail -f /var/log/nginx/access.log
+   67  sudo vim /etc/default/jenkins
+   68  sudo systemctl restart jenkins
+   69  sudo systemctl status jenkins
+   70  tail -f /var/log/nginx/access.log
+   71  sudo vim /etc/default/jenkins
+   72  sudo vim /etc/nginx/sites-available/jenkins.conf
+   73  sudo systemctl restart nginx
+   74  sudo ln -s /etc/nginx/sites-available/jenkins.conf /etc/nginx/sites-enabled/
+   75  sudo nginx -t && sudo systemctl reload nginx
+   76  sudo rm /etc/nginx/sites-enabled/default
+   77  sudo netstat -tulnp | grep 8080
+   78  sudo vim /etc/default/jenkins
+   79  sudo -i
+   80  curl ifconfig.me
+   81  cd /var/lib
+   82  ls
+   83  cd jenkins/
+   84  ls
+   85  nano config.xml
+   86  sudo nano config.xml
+   87  sudo systemctl restart jenkins
+   88  sudo cat config.xml | grep -i security
+   89  sudo systemctl stop jenkins
+   90  sudo nano config.xml
+   91  sudo systemctl start jenkins
+   92  sudo cat config.xml | grep -i security
+   93  sudo nano config.xml
+   94  sudo systemctl restart jenkins
+   95  sudo nano config.xml
+   96  cat config.xml
+   97  ls
+   98  sudo systemctl status jenkins
+   99  sudo systemctl stop jenkins
+  100  sudo systemctl status jenkins
+  101  sudo systemctl start jenkins
+  102  sudo systemctl status jenkins
+  103  cd /var/lib/jenkins/
+  104  ls
+  105  cd jobs
+  106  ls
+  107  cd ALL-JOBS-QUILR-PREPROD
+  108  ls
+  109  cd jobs/
+  110  ls
+  111  cd alert-transformation-service/
+  112  ls
+  113  cd builds/
+  114  ls
+  115  jenkins
+  116  sudo systemctl status jenkins
+  117  history
+ubuntu@ip-10-71-2-148:~$ sudo su quilradmin
+su: user quilradmin does not exist or the user entry does not contain all the required fields
+ubuntu@ip-10-71-2-148:~$ ls
+ubuntu@ip-10-71-2-148:~$ ls
+ubuntu@ip-10-71-2-148:~$ users
+ubuntu
+ubuntu@ip-10-71-2-148:~$
