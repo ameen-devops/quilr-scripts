@@ -10,6 +10,8 @@ echo everything throughout the script to see what changes have been done
 
 also make the secrets creation in the script at the last
 
+before the mkdir commands make sure quilradmin user is created / check the confluence page and make sure it has all the rights
+
 sudo mkdir -p /home/quilradmin/quilr-data/redis/master
 sudo mkdir -p /home/quilradmin/quilr-data/redis/replica
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/master
@@ -31,3 +33,4 @@ sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 sudo mkdir -p elasticsearch
 
+for all the mkdir commands make in script such that it shows everything verbosely
