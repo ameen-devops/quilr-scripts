@@ -20,7 +20,7 @@ primary:
 
   persistence:
     enabled: true
-    existingClaim: postgres-hostpath-pvc
+    existingClaim: postgresql-hostpath-pvc
 
   initdb:
     scriptsConfigMap: "quilr-initdb-scripts"
