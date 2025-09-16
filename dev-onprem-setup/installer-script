@@ -82,15 +82,15 @@ INSTALL SCRIPTS ALONG WITH BUNDLES NEED TO BE MOVED TO THE AIRGAPPED ENVIRONMENT
 MAKE THAT SCRIPTS EXECUTABLE with chmod +x
 IN THE MAIN SCRIPT ---> MAKE SURE EVERY POD HAS A RUNNING STATUS BY SOME CHECK FOR ALL THIRD PARTY COMPONENTS 
 
-sudo mkdir -p /home/quilradmin/quilr-data/postgres
-sudo chown -R 1001:1001 /home/quilradmin/quilr-data/postgres
-sudo chmod -R 775 /home/quilradmin/quilr-data/postgres
-sudo mkdir -p postgres
+sudo mkdir -p /home/quilradmin/quilr-data/postgresql
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/postgresql
+sudo chmod -R 775 /home/quilradmin/quilr-data/postgresql
+sudo mkdir -p postgresql
 
-cp ~/postgres-pv.yaml ~/postgres
-cp ~/postgres-values.yaml ~/postgres
-./postgres-bundle.sh
+cp ~/postgresql-pv.yaml ~/postgresql
+cp ~/postgresql-values.yaml ~/postgresql
+./postgresql-bundle.sh
 
 creates image.tar and tgz.gz of helm charts
- ./install-postgres.sh
+ ./install-postgresql.sh
 >>> Extracting bundle...and creating the init scripts and importing elasticsearch image, applying pv and pvs and helm install at last
