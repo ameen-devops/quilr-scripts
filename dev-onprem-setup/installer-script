@@ -35,6 +35,15 @@ sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
 sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
 sudo mkdir -p elasticsearch
 
+cp ~/elasticsearh-pv.yaml ~/elasticsearch
+cp ~/elasticsearch-values.yaml ~/elasticsearch
+./elasticsearch-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
+ ./install-elasticsearch.sh
+>>> Extracting bundle...and importing elasticsearch image, applying pv and pvs and helm install at last
+
+
 for all the mkdir commands make in script such that it shows everything verbosely
 
 chart version and elasticsearch version -  elasticsearch-21.5.0  and 8.17.4
@@ -72,3 +81,16 @@ CREATE THE INDEPENDENT DIRECTORIES AND COPIES PV YAML AND VALUES YAML
 INSTALL SCRIPTS ALONG WITH BUNDLES NEED TO BE MOVED TO THE AIRGAPPED ENVIRONMENT ----------> IMP HIGHLIGHT
 MAKE THAT SCRIPTS EXECUTABLE with chmod +x
 IN THE MAIN SCRIPT ---> MAKE SURE EVERY POD HAS A RUNNING STATUS BY SOME CHECK FOR ALL THIRD PARTY COMPONENTS 
+
+sudo mkdir -p /home/quilradmin/quilr-data/postgres
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/postgres
+sudo chmod -R 775 /home/quilradmin/quilr-data/postgres
+sudo mkdir -p postgres
+
+cp ~/postgres-pv.yaml ~/postgres
+cp ~/postgres-values.yaml ~/postgres
+./postgres-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
+ ./install-postgres.sh
+>>> Extracting bundle...and creating the init scripts and importing elasticsearch image, applying pv and pvs and helm install at last
