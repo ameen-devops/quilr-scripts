@@ -23,3 +23,5 @@ cp ~/redis-values.yaml ~/redis
 ./ redis-bundle.sh
 
 creates image.tar and tgz.gz of helm charts
+ ./install-redis.sh
+>>> Extracting bundle...and importing redis image, applying pv and pvs and helm install at last
