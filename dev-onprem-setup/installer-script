@@ -37,4 +37,4 @@ sudo mkdir -p elasticsearch
 
 for all the mkdir commands make in script such that it shows everything verbosely
 
-chart version and elasticsearch version - redis-20.11.5 and  7.4.2
+chart version and elasticsearch version -  elasticsearch-21.5.0  and 8.17.4
