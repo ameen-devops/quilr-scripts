@@ -18,3 +18,8 @@ sudo chown -R 1001:1001 /home/quilradmin/quilr-data/redis/replica
 sudo chmod -R 775 /home/quilradmin/quilr-data/redis/replica
 
 sudo mkdir -p redis
+cp ~/redis-pv.yaml ~/redis
+cp ~/redis-values.yaml ~/redis
+./ redis-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
