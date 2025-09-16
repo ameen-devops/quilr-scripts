@@ -38,3 +38,30 @@ sudo mkdir -p elasticsearch
 for all the mkdir commands make in script such that it shows everything verbosely
 
 chart version and elasticsearch version -  elasticsearch-21.5.0  and 8.17.4
+--------------------------------------------
+elastic-search image compression
+--------------------------------------------
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i elastic
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/elasticsearch            8.17.4-debian-12-r0   94f392890b6ff       757MB
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i os-shell
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/os-shell                 12-debian-12-r40      eac44b6234277       56.7MB
+quilradmin@ip-10-71-12-87:~$ ls
+elasticsearch            elasticsearch-bundle.tar.gz  neo4j-prev  quilr-tp  redis-bundle     redis-bundle.tar.gz  vault-bundle.tar
+elasticsearch-bundle.sh  install-redis.sh             quilr-data  redis     redis-bundle.sh  snap
+quilradmin@ip-10-71-12-87:~$ ls -lhd elasticsearch-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 773M Sep 16 13:04 elasticsearch-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
+--------------------------------------------
+redis image compression
+--------------------------------------------
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i redis
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/redis                    7.4.2-debian-12-r6    f7f358889b530       51.2MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd redis-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 49M Sep 16 11:27 redis-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
