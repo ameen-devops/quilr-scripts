@@ -25,3 +25,9 @@ cp ~/redis-values.yaml ~/redis
 creates image.tar and tgz.gz of helm charts
  ./install-redis.sh
 >>> Extracting bundle...and importing redis image, applying pv and pvs and helm install at last
+
+sudo mkdir -p /home/quilradmin/quilr-data/elasticsearch
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/elasticsearch
+sudo chmod -R 775 /home/quilradmin/quilr-data/elasticsearch
+sudo mkdir -p elasticsearch
+
