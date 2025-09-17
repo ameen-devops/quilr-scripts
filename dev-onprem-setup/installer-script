@@ -116,3 +116,11 @@ sudo mkdir -p ~/kafka
 sudo mkdir -p ~/zookeeper
 sudo chown -R quilradmin:quilradmin ~/zookeeper
 sudo chown -R quilradmin:quilradmin ~/kafka
+
+------INSTEAD OF SEPERATE DIRECTORIES WE ARE ADDING KAFKA ZOOKEEPER KAFKA-UI IN THE SAME DIRECTORY ---------
+
+sudo mkdir -p /home/quilradmin/quilr-data/kafka-zookeeper/
+sudo chmod -R 755 /home/quilradmin/quilr-data/kafka-zookeeper
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/kafka-zookeeper
+sudo mkdir -p ~/kafka-zookeeper
+sudo chown -R quilradmin:quilradmin ~/kafka-zookeeper
