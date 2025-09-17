@@ -200,5 +200,16 @@ creates image.tar and tgz.gz of helm charts
  ./install-neo4j.sh
 >>> Extracting bundle...and  importing neo4j image, applying pv and pvs and applying yaml at last
 
-kubectl apply -f neo4j-pv.yaml -n quilr
-kubectl apply -f neo4j.yaml -n quilr
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i neo4j
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/library/neo4j                    5.25.1-community      cc5bcf04b303e       318MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd neo4j-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 305M Sep 17 09:36 neo4j-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
+
+sudo mkdir -p ~/vault
+sudo chown -R quilradmin:quilradmin ~/vault
+cp ~/cr-raft.yaml ~/rbac.yaml ~/vault/
+./vault-bundle.sh
+
