@@ -97,3 +97,11 @@ cp ~/postgresql-values.yaml ~/postgresql
 creates image.tar and tgz.gz of helm charts
  ./install-postgresql.sh
 >>> Extracting bundle...and creating the init scripts and importing elasticsearch image, applying pv and pvs and helm install at last
+
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i postgres
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/postgresql               17.6.0-debian-12-r4   c5041d46d3b05       112MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd postgresql-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 106M Sep 17 05:33 postgresql-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
