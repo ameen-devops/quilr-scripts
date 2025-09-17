@@ -141,6 +141,22 @@ creates image.tar and tgz.gz of helm charts
  ./install-kafka.sh
 >>> Extracting bundle...and importing kafka image, applying the yaml
 
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i zookeeper
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/zookeeper                3.9.0                 0b6efe637ac89       281MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd zookeeper-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 267M Sep 17 07:11 zookeeper-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i kafka
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/bitnami/kafka                    3.5.1                 f79889e4e4af4       352MB
+docker.io/provectuslabs/kafka-ui           latest                99307ab28a49d       154MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd kafka-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 335M Sep 17 07:28 kafka-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
+
+
 sudo mkdir -p ~/kafkaui
 sudo chown -R quilradmin:quilradmin ~/kafkaui
 
