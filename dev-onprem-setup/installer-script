@@ -166,3 +166,40 @@ cp ~/kafkaui.yaml ~/kafkaui
 creates image.tar and tgz.gz of helm charts
  ./install-kafkaui.sh
 >>> Extracting bundle...and importing kafkaui image, applying the yaml
+
+quilradmin@ip-10-71-12-87:~$ sudo crictl images | grep -i provectus
+WARN[0000] Config "/etc/crictl.yaml" does not exist, trying next: "/usr/bin/crictl.yaml"
+WARN[0000] Image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+docker.io/provectuslabs/kafka-ui           latest                99307ab28a49d       154MB
+quilradmin@ip-10-71-12-87:~$ ls -lhd kafkaui-bundle.tar.gz
+-rw-rw-r-- 1 quilradmin quilradmin 147M Sep 17 07:56 kafkaui-bundle.tar.gz
+quilradmin@ip-10-71-12-87:~$
+
+ sudo mkdir -p /home/quilradmin/quilr-data/neo4j/data
+ sudo mkdir -p /home/quilradmin/quilr-data/neo4j/conf
+ sudo mkdir -p /home/quilradmin/quilr-data/neo4j/plugins
+ sudo chown -R 7474:7474 /home/quilradmin/quilr-data/neo4j
+ sudo chmod -R 755 /home/quilradmin/quilr-data/neo4j
+ sudo mkdir -p ~/neo4j
+ sudo chown -R quilradmin:quilradmin ~/neo4j
+ cd ~/neo4j
+ wget https://github.com/neo4j/apoc/releases/download/5.25.1/apoc-5.25.1-core.jar
+ sudo cp apoc-5.25.1-core.jar /home/quilradmin/quilr-data/neo4j/plugins/
+ sudo chown 7474:7474 /home/quilradmin/quilr-data/neo4j/plugins/apoc-5.25.1-core.jar ----> for source node for 3 lines for testing
+
+ wget https://github.com/neo4j/apoc/releases/download/5.25.1/apoc-5.25.1-core.jar
+sudo cp apoc-5.25.1-core.jar /home/quilradmin/neo4j/   --------> for target node 
+
+cp ~/neo4j-pv.yaml ~/neo4j
+cp ~/neo4j.yaml ~/neo4j
+./neo4j-bundle.sh
+
+in the script we need to have additional step of first copying that apoc core jar and then proceed with the rest
+
+creates image.tar and tgz.gz of helm charts
+ ./install-neo4j.sh
+>>> Extracting bundle...and  importing neo4j image, applying pv and pvs and applying yaml at last
+
+kubectl apply -f neo4j-pv.yaml -n quilr
+kubectl apply -f neo4j.yaml -n quilr
+
