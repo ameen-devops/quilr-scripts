@@ -124,3 +124,11 @@ sudo chmod -R 755 /home/quilradmin/quilr-data/kafka-zookeeper
 sudo chown -R 1001:1001 /home/quilradmin/quilr-data/kafka-zookeeper
 sudo mkdir -p ~/kafka-zookeeper
 sudo chown -R quilradmin:quilradmin ~/kafka-zookeeper
+
+cp ~/zookeeper.yaml ~/zookeeper
+./zookeeper-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
+ ./install-zookeeper.sh
+>>> Extracting bundle...and importing zookeeper image, applying the yaml
+
