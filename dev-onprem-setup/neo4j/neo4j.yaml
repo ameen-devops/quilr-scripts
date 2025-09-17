@@ -44,10 +44,10 @@ spec:
           resources:
             requests:
               memory: "6Gi"
-              cpu: "1"
+              cpu: "2"
             limits:
               memory: "8Gi"
-              cpu: "2"
+              cpu: "4"
           env:
             - name: NEO4J_dbms_mode
               value: SINGLE
