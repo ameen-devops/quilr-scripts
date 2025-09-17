@@ -194,7 +194,7 @@ cp ~/neo4j-pv.yaml ~/neo4j
 cp ~/neo4j.yaml ~/neo4j
 ./neo4j-bundle.sh
 
-in the script we need to have additional step of first copying that apoc core jar and then proceed with the rest
+in the script of install we need to have additional step of first copying that apoc core jar and then proceed with the rest
 
 creates image.tar and tgz.gz of helm charts
  ./install-neo4j.sh
@@ -202,4 +202,3 @@ creates image.tar and tgz.gz of helm charts
 
 kubectl apply -f neo4j-pv.yaml -n quilr
 kubectl apply -f neo4j.yaml -n quilr
-
