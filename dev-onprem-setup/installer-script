@@ -134,3 +134,19 @@ creates image.tar and tgz.gz of helm charts
  ./install-zookeeper.sh
 >>> Extracting bundle...and importing zookeeper image, applying the yaml
 
+cp ~/kafka.yaml ~/kafka
+./kafka-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
+ ./install-kafka.sh
+>>> Extracting bundle...and importing kafka image, applying the yaml
+
+sudo mkdir -p ~/kafkaui
+sudo chown -R quilradmin:quilradmin ~/kafkaui
+
+cp ~/kafkaui.yaml ~/kafkaui
+./kafkaui-bundle.sh
+
+creates image.tar and tgz.gz of helm charts
+ ./install-kafkaui.sh
+>>> Extracting bundle...and importing kafkaui image, applying the yaml
