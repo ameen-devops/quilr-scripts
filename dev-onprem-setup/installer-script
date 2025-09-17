@@ -105,3 +105,14 @@ docker.io/bitnami/postgresql               17.6.0-debian-12-r4   c5041d46d3b05  
 quilradmin@ip-10-71-12-87:~$ ls -lhd postgresql-bundle.tar.gz
 -rw-rw-r-- 1 quilradmin quilradmin 106M Sep 17 05:33 postgresql-bundle.tar.gz
 quilradmin@ip-10-71-12-87:~$
+
+sudo mkdir -p /home/quilradmin/quilr-data/kafka/
+sudo mkdir -p /home/quilradmin/quilr-data/zookeeper/
+sudo chmod -R 755 /home/quilradmin/quilr-data/kafka
+sudo chmod -R 755 /home/quilradmin/quilr-data/zookeeper
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/kafka
+sudo chown -R 1001:1001 /home/quilradmin/quilr-data/zookeeper
+sudo mkdir -p ~/kafka
+sudo mkdir -p ~/zookeeper
+sudo chown -R quilradmin:quilradmin ~/zookeeper
+sudo chown -R quilradmin:quilradmin ~/kafka
