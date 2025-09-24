@@ -1,0 +1,82 @@
+[quilradmin@ip-10-71-17-191 ~]$ kubectl get pods -n quilr --no-headers \
+| awk '{print $1}' \
+| grep -E 'kafka|zookeeper|redis|vault|elasticsearch|clickhouse' \
+| sed -E 's/-[0-9]+$//' \
+| sed -E 's/-[a-z0-9]{9,10}-[a-z0-9]{4,5}$//' \
+| sort -u | tee >(wc -l | awk '{print "Total statefulsets: "$1}')
+kafka-server
+kafka-ui-deployment
+my-redis-master
+my-redis-replicas
+quilr-clickhouse-shard0
+quilr-elasticsearch-db-master
+vault
+vault-configurer
+vault-operator
+zookeeper-server
+Total statefulsets: 10
+[quilradmin@ip-10-71-17-191 ~]$
+========================================================================================================================
+[quilradmin@ip-10-71-17-191 ~]$ kubectl get pods -n quilr --no-headers \
+| awk '{print $1}' \
+| rev | cut -d'-' -f3- | rev \
+| grep -v -E 'kafka|zookeeper|redis|vault|elasticsearch|clickhouse' \
+| sort -u | tee >(wc -l | awk '{print "Total deployments: "$1}')
+
+alert-transformation-service
+app-sync-client-service
+app-transformation-service
+axis-analytics-job
+axis-ingestion-service
+browser-extension-service
+classification-config-service
+content-alert-classification
+content-destfwd-service
+content-knowledgebase-service
+content-lambda-service
+content-listerner-service
+content-repository-service
+content-scheduler-service
+content-server-transformations
+content-temporal-service
+content-tracking-service
+copilot-workflow-executor
+dashboard-service
+data-config-api
+data-explorer-service
+device-transformation-service
+dlp-classification-and-clustering-service
+dlp-config-service
+dlp-connector-service
+dlp-data-definition-service
+dlp-deduplication-service
+dlp-deletion-service
+dlp-indexer-service
+dlp-metrics-service
+event-transformation-service
+instance-manager-service
+quilr-agent-service
+quilr-ai-config-manager
+quilr-ai-services
+quilr-auth-ts
+quilr-bff
+quilr-eam-service
+quilr-findingresolution-service
+quilr-grouping-service
+quilr-inferencing-models
+quilr-memory-mcp
+quilr-playbook-service
+quilr-query-builder
+quilr-scheduler-service
+quilr-scoring-service
+quilr-web
+raw-forwarder-service
+schema-registry-service
+search-service
+snowflake-ingestion-service
+system-email-service
+templating-engine
+user-response-action-service
+user-transformation-service
+web-transformation-service
+Total deployments: 57
