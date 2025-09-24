@@ -1,0 +1,36 @@
+[quilradmin@ip-10-71-17-191 ~]$ helm repo add kubetail https://kubetail-org.github.io/helm-charts/
+helm install kubetail kubetail/kubetail --namespace kubetail-system --create-namespace
+"kubetail" has been added to your repositories
+NAME: kubetail
+LAST DEPLOYED: Wed Sep 24 16:28:01 2025
+NAMESPACE: kubetail-system
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+[quilradmin@ip-10-71-17-191 ~]$ kubectl get pods -n kubetail-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+kubetail-cluster-agent-5xp72            1/1     Running   0          10s
+kubetail-cluster-agent-84r58            1/1     Running   0          10s
+kubetail-cluster-agent-jfsss            1/1     Running   0          10s
+kubetail-cluster-api-56b6547d84-fh5l4   0/1     Running   0          10s
+kubetail-dashboard-5c498845cf-ph57d     0/1     Running   0          10s
+[quilradmin@ip-10-71-17-191 ~]$ kubectl get svc -n kubetail-system
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+kubetail-cluster-agent   ClusterIP   None             <none>        <none>     20s
+kubetail-cluster-api     ClusterIP   172.20.43.126    <none>        8080/TCP   20s
+kubetail-dashboard       ClusterIP   172.20.164.237   <none>        8080/TCP   20s
+[quilradmin@ip-10-71-17-191 ~]$ kubectl patch svc kubetail-dashboard   \
+  -n kubetail-system \
+  -p '{"metadata":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-internal":"true"}}}'
+
+ kubectl patch svc kubetail-dashboard   \
+  -n kubetail-system \
+  -p '{"spec":{"type": "LoadBalancer"}}'
+service/kubetail-dashboard patched
+service/kubetail-dashboard patched
+[quilradmin@ip-10-71-17-191 ~]$ kubectl get svc -n kubetail-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP                                                                        PORT(S)          AGE
+kubetail-cluster-agent   ClusterIP      None             <none>                                                                             <none>           2m13s
+kubetail-cluster-api     ClusterIP      172.20.43.126    <none>                                                                             8080/TCP         2m13s
+kubetail-dashboard       LoadBalancer   172.20.164.237   internal-abc2a2f5e7cf948bab527b7f1cd088bd-1768018151.us-east-1.elb.amazonaws.com   8080:30563/TCP   2m13s
+[quilradmin@ip-10-71-17-191 ~]$
