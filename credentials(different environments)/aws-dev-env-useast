@@ -1,1 +1,3 @@
-ssh -i .\bastion.pem quilradmin@10.71.12.87
+ssh -i .\bastion.pem quilradmin@10.71.12.87  -----> dev server 
+
+ssh -i .\bastion.pem quilradmin@10.71.13.199  ----> test dev server
